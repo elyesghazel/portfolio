@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+# Elyes Ghazel – Software Engineer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Seitenstruktur
 
-Currently, two official plugins are available:
+### 1. Home (Startseite)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Hero Section**
+  - Name & Claim (z. B. "Ich baue performante Webanwendungen")
+  - Call-to-Action Button → "Kontaktiere mich"
+- **Kurzer Überblick Services**
+  - 3–4 Kacheln (Webseiten nach Design, Fullstack-Entwicklung, Eigenes Design, Performance/SEO)
+- **Highlight Projekte**
+  - 2–3 ausgewählte Projekte mit Screenshot
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 2. Services
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Service Cards**
+  - Titel, Icon, Beschreibung
+  - Z. B.:
+    - Webentwicklung nach Designvorlage
+    - Custom UI/UX Design + Entwicklung
+    - Optimierung von bestehenden Projekten
+- Call-to-Action am Ende: "Lass uns dein Projekt starten"
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 3. Portfolio / Projects
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Project Cards**
+  - Screenshot, kurze Beschreibung, Techstack
+  - Button: Live Demo / GitHub / Case Study
+- Grid-Layout (2–3 Spalten)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 4. About
+
+- **Über mich**
+  - Kurzbeschreibung (wer du bist, deine Stärken, wie du arbeitest)
+  - Kein CV, sondern Value
+- Optional: kleines Foto oder Avatar
+
+---
+
+### 5. Contact
+
+- **Formular**
+  - Name, E-Mail, Nachricht
+- Alternativ: direkter Kontakt
+  - `info@elyesghazel.ch`
+  - Social Links (GitHub, LinkedIn)
+
+---
+
+## React Komponenten Übersicht
