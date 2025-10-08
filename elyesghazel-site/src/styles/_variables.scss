@@ -1,0 +1,22 @@
+:root {
+  --primary-color: #1a70e0;
+  --primary-color-darker: #184fc5;
+  --secondary-color: #1c1c1e;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --border-radius: 4px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  --navbar-background-color: #2b2b2b;
+
+  --positive-value: var(--primary-color);
+  --negative-value: #dd2b0c;
+
+  /* Dark mode variables */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-color: #f5f5f5;
+      --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
