@@ -1,12 +1,10 @@
-
-@use "tailwindcss";
-@use "./variables";
-
+@import "./variables";
 
 .app-container {
   background-color: var(--background-color);
   color: var(--text-color);
   box-shadow: var(--box-shadow);
+  height: 100vh;
 
-  font-family: "Inter", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }

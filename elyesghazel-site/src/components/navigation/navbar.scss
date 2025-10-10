@@ -1,0 +1,18 @@
+.navbar {
+  background-color: var(--navbar-background-color);
+
+  .nav-items {
+    .nav-item {
+      a {
+        font-size: 20px;
+        font-weight: lighter;
+        color: var(--text-color);
+      }
+
+      &.active a {
+        font-weight: normal;
+        border-bottom: 2px solid var(--primary-color);
+      }
+    }
+  }
+}

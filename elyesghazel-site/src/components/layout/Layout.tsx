@@ -3,15 +3,12 @@ import Navbar from "../navigation/Navbar";
 
 function Layout() {
   return (
-    <div
-      className="app-container"
-    >
+    <div className="app-container">
       {/* Navbar always visible */}
       <div
         style={{
           justifyContent: "center",
           display: "flex",
-          marginTop: 10,
           textAlign: "center",
         }}
       >
