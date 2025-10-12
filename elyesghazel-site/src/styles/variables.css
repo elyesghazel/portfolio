@@ -1,13 +1,14 @@
 :root {
   --primary-color: #2078ec;
-  --primary-gradient: linear-gradient(90deg, #20ecec 47%, #1d1286 100%);
+  --primary-color-darker: #1a5bb0;
+  --primary-gradient: linear-gradient(180deg, #20ecec 47%, #1d1286 100%);
   --accent-color: #3e20ec;
 
   --background-color: #121212;
   --background-gradient: linear-gradient(
-    90deg,
-    #1e1e1e,
-    var(--background-color)
+    -360deg,
+    #1e1e1e 25%,
+    var(--background-color) 75%
   );
 
   --footer-gradient: linear-gradient(

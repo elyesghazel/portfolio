@@ -1,10 +1,15 @@
 @import "./variables";
 
 .app-container {
-  background-color: var(--background-color);
+  background: var(--background-gradient);
   color: var(--text-color);
   box-shadow: var(--box-shadow);
-  height: 100vh;
 
   font-family: "Montserrat", sans-serif;
+}
+
+.text-gradient {
+  background-image: var(--primary-gradient);
+  color: transparent;
+  background-clip: text;
 }
