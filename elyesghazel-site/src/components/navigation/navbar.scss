@@ -1,16 +1,25 @@
 .navbar {
   background-color: var(--navbar-background-color);
+  position: sticky;
 
   .nav-items {
     .nav-item {
+      width: fit-content;
+      max-width: 100%;
       a {
-        font-size: 20px;
-        font-weight: lighter;
-        color: var(--text-color);
+        font-size: 18px;
+        color: var(--text-subtitle);
+        transition: color 0.5s ease, border-color 0.5s ease;
+        display: flex;
+        align-items: center;
       }
 
-      &.active a {
-        font-weight: normal;
+      a:hover {
+        color: var(--primary-color);
+      }
+
+      a.active {
+        color: var(--primary-color);
         border-bottom: 2px solid var(--primary-color);
       }
     }
