@@ -11,7 +11,10 @@ export default function QuickStatsElement() {
           className="flex flex-col w-[140px] md:w-[300px] gap-y-3"
         >
           <div className="top flex flex-row justify-between items-center w-full">
-            <h1 className="text-xl md:text-4xl font-semibold">{value}</h1>
+            <h1 className="text-2xl md:text-4xl font-semibold">
+              {value}
+              <span className="text-gradient">+</span>
+            </h1>
             <div className="md:inline-block hidden">
               {React.createElement(icon, { size: 40 }) as React.ReactNode}
             </div>

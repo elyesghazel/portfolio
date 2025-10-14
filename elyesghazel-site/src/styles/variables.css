@@ -11,11 +11,9 @@
     var(--background-color) 75%
   );
 
-  --footer-gradient: linear-gradient(
-    90deg,
-    #1d1d1d 0%,
-    var(--background-color) 100%
-  );
+  --footer-bg: #151515;
+
+
 
   --text-color: #fff;
   --text-subtitle: #b9b9b9;

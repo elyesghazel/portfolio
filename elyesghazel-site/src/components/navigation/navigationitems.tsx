@@ -2,7 +2,7 @@ import {
   HomeIcon,
   GridIcon,
   NotebookPenIcon,
-  CircleUserIcon,
+  BadgeDollarSign,
 } from "lucide-react"; // lightweight icons
 
 export default function navigationItems() {
@@ -23,9 +23,9 @@ export default function navigationItems() {
       icon: NotebookPenIcon,
     },
     {
-      label: "Contact Me",
-      path: "/contact",
-      icon: CircleUserIcon,
+      label: "Request a quote",
+      path: "/quote",
+      icon: BadgeDollarSign,
     },
   ];
 }

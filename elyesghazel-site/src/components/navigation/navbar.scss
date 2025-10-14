@@ -6,22 +6,30 @@
     .nav-item {
       width: fit-content;
       max-width: 100%;
+
       a {
         font-size: 18px;
         color: var(--text-subtitle);
-        transition: color 0.5s ease, border-color 0.5s ease;
         display: flex;
         align-items: center;
+
+        transform: translateY(0);
+        transition: color 0.5s ease, border-color 0.5s ease, transform 0.3s ease-in-out;
       }
 
-      a:hover {
-        color: var(--primary-color);
-      }
-
+      a:hover,
       a.active {
         color: var(--primary-color);
-        border-bottom: 2px solid var(--primary-color);
+        transform: translateY(-15%);
       }
+
+      @media (max-width: 1024px ) {
+        a:hover,
+        a.active {
+          transform: none; /* stop the bouncing */
+        }
+      }
+
     }
   }
 }

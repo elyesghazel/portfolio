@@ -11,7 +11,7 @@ export default function Navbar() {
   const navItems = navigationItems();
 
   return (
-    <nav className="navbar flex flex-wrap justify-between items-center w-full p-4 bg-[var(--navbar-background-color)] md:sticky md:top-0 md:z-50 backdrop-blur-md z-[90] lg:flex-row">
+    <nav className="navbar flex flex-wrap justify-between items-center w-full p-4 bg-[var(--navbar-background-color)]  md:sticky md:top-0 md:z-50 backdrop-blur-md z-[99] lg:flex-row">
       <h2 className="text-[20px] font-medium">elyesghazel.ch</h2>
 
       {/* Hamburger menu button for mobile + tablet */}

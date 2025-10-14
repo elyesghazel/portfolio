@@ -4,17 +4,17 @@ export default function quickstats() {
   return [
     {
       label: "Bugs fixed",
-      value: "500+",
+      value: "500",
       icon: BugIcon,
     },
     {
       label: "Years experience",
-      value: "7+",
+      value: "7",
       icon: MedalIcon,
     },
     {
       label: "Clients satisfied",
-      value: "10+",
+      value: "10  ",
       icon: UserIcon,
     },
   ];
