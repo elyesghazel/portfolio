@@ -13,7 +13,7 @@ export default function Footer() {
                 </a>
             </div>
             <div className="flex flex-col text-center">
-                <h2>© 2025 Elyes Ghazel</h2>
+                <h2>© {new Date().getFullYear()} Elyes Ghazel</h2>
                 <span className="text-(--text-subtitle) text-sm">All rights reserved</span>
             </div>
         </div>

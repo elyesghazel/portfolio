@@ -59,8 +59,9 @@ export default function Navbar() {
 
       {/* Desktop CTA only */}
       <NavLink
-        to="/contact"
+        to="mailto:info@elyesghazel.ch"
         className="cta px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-800 transition hidden lg:inline-block"
+        title="info@elyesghazel.ch"
       >
         Get in Touch
       </NavLink>

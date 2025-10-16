@@ -26,7 +26,7 @@ function Layout() {
         </main>
 
         {/* Footer stays at bottom */}
-        <footer className="w-full z-99">
+        <footer className="w-full z-99" id="footer">
           <Footer />
         </footer>
       </div>
