@@ -1,4 +1,4 @@
-import { LayoutPanelTopIcon, BrushCleaningIcon, PaletteIcon, DatabaseIcon, TargetIcon, PictureInPicture2Icon, BrushIcon, HammerIcon, CpuIcon } from "lucide-react";
+import { LayoutPanelTopIcon, BrushCleaningIcon, PaletteIcon, DatabaseIcon, TargetIcon, BrushIcon, HammerIcon, CpuIcon } from "lucide-react";
 import Badge from "./Badge";
 
 export default function services() {
