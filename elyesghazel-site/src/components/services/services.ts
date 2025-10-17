@@ -18,7 +18,7 @@ export default function services() {
                 }
             ],
             cta: "Design me something",
-            link: "design",
+            link: "/quote?type=design",
             tags: [
                 Badge({label: "Figma", primary: true}),
                 Badge({label: "Design", primary: false})
