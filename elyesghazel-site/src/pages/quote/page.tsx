@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
+import { toast } from "sonner";
 
 export default function RequestQuotePage() {
   const location = useLocation();
@@ -14,6 +15,7 @@ export default function RequestQuotePage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+
 
   const services = [
     { id: "uiux", label: "UI/UX Design", value: "UI/UX Design" },
@@ -53,19 +55,18 @@ export default function RequestQuotePage() {
 
     try {
       const res = await fetch(
-        "https://webhook.site/ce125931-a3ac-4500-be58-0bfa390ec6c4",
+        "https://formspree.io/f/xblzwwpy",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "true",
           },
           body: JSON.stringify(payload),
         }
       );
 
       if (res.ok) {
-        alert("Quote request submitted!");
+        toast("Quote request has been sent successfully.")
         setName("");
         setEmail("");
         setDescription("");
@@ -137,7 +138,7 @@ export default function RequestQuotePage() {
               >
                 {services.map(({ id, label, value }) => (
                   <div key={id} className="flex items-center gap-2">
-                    <RadioGroupItem value={value} id={id} />
+                    <RadioGroupItem value={value} id={id} className="cursor-pointer"/>
                     <Label htmlFor={id}>{label}</Label>
                   </div>
                 ))}
@@ -158,14 +159,14 @@ export default function RequestQuotePage() {
                   { id: "flexible", label: "Flexible", value: "flexible" },
                 ].map(({ id, label, value }) => (
                   <div key={id} className="flex items-center gap-2">
-                    <RadioGroupItem value={value} id={id} />
+                    <RadioGroupItem value={value} id={id} className="cursor-pointer"/>
                     <Label htmlFor={id}>{label}</Label>
                   </div>
                 ))}
               </RadioGroup>
             </div>
 
-            <Button type="submit" className="mt-4 w-fit">
+            <Button type="submit" className="mt-4 w-fit cursor-pointer text-white bg-(--primary-color) hover:bg-(--primary-color-darker)">
               Request Quote
             </Button>
           </CardContent>
@@ -174,3 +175,4 @@ export default function RequestQuotePage() {
     </div>
   );
 }
+
