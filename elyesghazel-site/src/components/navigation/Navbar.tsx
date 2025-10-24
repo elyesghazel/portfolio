@@ -48,7 +48,7 @@ export default function Navbar() {
         {/* Mobile + tablet CTA */}
         <li>
           <NavLink
-            to="/contact"
+            to="mailto:info@elyesghazel.ch"
             className="cta inline-block lg:hidden px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-800 transition"
             onClick={() => setMenuOpen(false)}
           >
