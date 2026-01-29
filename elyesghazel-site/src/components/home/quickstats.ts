@@ -14,7 +14,7 @@ export default function quickstats() {
     },
     {
       label: "Clients satisfied",
-      value: "10  ",
+      value: "15",
       icon: UserIcon,
     },
   ];
