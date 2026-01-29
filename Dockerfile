@@ -3,16 +3,19 @@ FROM node:20-slim AS build
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
-# Kopiere die Abhängigkeiten
-COPY package.json pnpm-lock.yaml ./
+
+# Kopiere die Abhängigkeiten aus dem Unterordner
+COPY elyesghazel-site/package.json elyesghazel-site/pnpm-lock.yaml ./
+
 RUN pnpm install --frozen-lockfile
 
-# Kopiere den Rest und builde
-COPY . .
+# Kopiere den gesamten Unterordner-Inhalt
+COPY elyesghazel-site/ ./
+
 RUN pnpm build
 
 # Stage 2: Production
 FROM nginx:alpine
-# Hier kopieren wir das Ergebnis INTERN von Stage 1 zu Stage 2
+# Beachte: Vite baut standardmäßig nach /app/dist, wenn du im root des Projekts baust
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
