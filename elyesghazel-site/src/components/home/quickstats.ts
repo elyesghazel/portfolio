@@ -4,7 +4,7 @@ export default function quickstats() {
   return [
     {
       label: "Bugs fixed",
-      value: "600",
+      value: "700",
       icon: BugIcon,
     },
     {
