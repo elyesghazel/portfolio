@@ -1,4 +1,4 @@
-const modules = import.meta.glob("../markdown/*.md", {
+const modules = import.meta.glob("./projects/*.md", {
   query: "?raw",
   import: "default",
   eager: true,

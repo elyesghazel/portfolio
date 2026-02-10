@@ -14,6 +14,7 @@ import {
   Route,
   useLocation,
 } from "react-router";
+import Recommendations from "./components/Recommendations";
 
 function MainContent() {
   const location = useLocation();
@@ -36,6 +37,10 @@ function MainContent() {
 
         <Reveal>
           <Skills />
+        </Reveal>
+
+        <Reveal>
+          <Recommendations />
         </Reveal>
 
         <section id="projects" className="w-full flex flex-col items-center">
