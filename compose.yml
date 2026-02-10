@@ -1,1 +1,20 @@
 services:
+  swisscom-portfolio:
+    build: .
+    container_name: "web-swisscom-portfolio"
+    restart: always
+    networks:
+      - traefik_proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.swisscom-portfolio.rule=Host(`swisscom.elyesghazel.ch`)"
+      - "traefik.http.routers.swisscom-portfolio.entrypoints=https"
+      - "traefik.http.routers.swisscom-portfolio.tls=true"
+      - "traefik.http.routers.swisscom-portfolio.tls.certresolver=cloudflare"
+      - "traefik.http.services.swisscom-portfolio.loadbalancer.server.port=80"
+
+networks:
+  traefik_proxy:
+    external: true
