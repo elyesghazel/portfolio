@@ -3,22 +3,21 @@ FROM node:20-slim AS build
 
 WORKDIR /app
 
-# Kopiere die Abhängigkeiten (beachte das npm lockfile!)
-COPY package.json package-lock.json ./
+# Wir kopieren die package.json, aber IGNORIEREN die pnpm-lock.yaml
+COPY package.json ./
 
-# Installiere Abhängigkeiten mit npm
-RUN npm ci
+# Wir nutzen npm install (das generiert eine temporäre package-lock im Container)
+RUN npm install
 
-# Kopiere den Rest des Codes
+# Rest kopieren
 COPY . .
 
-# Baue das Projekt
+# Build ausführen
 RUN npm run build
 
-# Stage 2: Production
+# Stage 2: Production (bleibt gleich)
 FROM nginx:alpine
-# Kopiere das Ergebnis (Vite baut standardmäßig nach /dist)
 COPY --from=build /app/dist /usr/share/nginx/html
-# Kopiere deine nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
