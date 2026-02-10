@@ -9,11 +9,11 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.swisscom-portfolio.rule=Host(`swisscom.elyesghazel.ch`)"
-      - "traefik.http.routers.swisscom-portfolio.entrypoints=https"
-      - "traefik.http.routers.swisscom-portfolio.tls=true"
-      - "traefik.http.routers.swisscom-portfolio.tls.certresolver=cloudflare"
-      - "traefik.http.services.swisscom-portfolio.loadbalancer.server.port=80"
+      - "traefik.http.routers.portfolio.rule=Host(`elyesghazel.ch`)"
+      - "traefik.http.routers.portfolio.entrypoints=https"
+      - "traefik.http.routers.portfolio.tls=true"
+      - "traefik.http.routers.portfolio.tls.certresolver=cloudflare"
+      - "traefik.http.services.portfolio.loadbalancer.server.port=80"
 
 networks:
   traefik_proxy:
