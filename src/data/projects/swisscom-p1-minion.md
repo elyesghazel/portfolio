@@ -9,10 +9,5 @@ shortDescription: "Im Team Minion, lernt man die Grundlagen über HTML, CSS und 
 
 # Tätigkeit bei Swisscom
 
-In meinem ersten Einsatz durfte ich an der Core-API mitarbeiten.
-
-## Aufgaben
-
-- Implementierung neuer Endpoints
-- Unit-Testing mit JUnit
-- Deployment via CI/CD Pipeline auf OpenShift
+In diesem Projekt lernten wir die Grundlagen von HTML, CSS und JavaScript kennen.
+Zum Schluss des Projektes hatten wir auch die Möglichkeit das Angular Framework anzuschauen.

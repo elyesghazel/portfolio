@@ -7,10 +7,6 @@ tags: ["NextJS", "Git", "AWS", "Vue.js", "SDX"]
 shortDescription: "..."
 ---
 
-# Tätigkeit bei Swisscom
-
-placeholder
-
-## Aufgaben
-
-lorem impsum dolor dot lir anem
+```
+no description yet
+```

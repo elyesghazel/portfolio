@@ -14,7 +14,7 @@ const modules = import.meta.glob("./recommendations/*.md", {
 });
 
 export const testimonials: Testimonial[] = Object.entries(modules).map(
-  ([path, content]) => {
+  ([_, content]) => {
     const rawContent = content as string;
 
     const match = rawContent.match(
