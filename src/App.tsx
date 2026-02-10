@@ -8,15 +8,22 @@ import Skills from "./components/Skills";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import { Reveal } from "./components/Reveal";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router";
 
-function App() {
+function MainContent() {
+  const location = useLocation();
+  const isSwisscomMode = location.pathname === "/sc";
+
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const privateProjects = projects.filter((p) => p.type === "private");
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-200 selection:bg-blue-500/30 font-mono overflow-x-hidden">
-      <Navbar />
-
       <main className="pt-24 max-w-6xl mx-auto px-4 flex flex-col items-center space-y-32">
         <Reveal>
           <Hero />
@@ -50,22 +57,27 @@ function App() {
           </Reveal>
         </section>
 
-        <section id="experience" className="w-full">
-          <Reveal>
-            <div className="flex flex-col items-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center">
-                <span className="text-blue-500 mr-3">/</span> swisscom_projekte
-                <span className="text-blue-500 ml-3">/</span>
-              </h2>
-            </div>
-          </Reveal>
+        {isSwisscomMode && (
+          <section id="experience" className="w-full">
+            <Reveal>
+              <div className="flex flex-col items-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center">
+                  <span className="text-blue-500 mr-3">/</span>{" "}
+                  swisscom_projekte
+                  <span className="text-blue-500 ml-3">/</span>
+                </h2>
+              </div>
+            </Reveal>
 
-          <Reveal>
-            <div className="w-full">
-              <SwisscomTimeline onProjectClick={(p) => setSelectedProject(p)} />
-            </div>
-          </Reveal>
-        </section>
+            <Reveal>
+              <div className="w-full">
+                <SwisscomTimeline
+                  onProjectClick={(p) => setSelectedProject(p)}
+                />
+              </div>
+            </Reveal>
+          </section>
+        )}
 
         <Reveal>
           <Contact />
@@ -136,6 +148,20 @@ function App() {
         <div>© 2026 ELYES — ALL RIGHTS RESERVED</div>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-[#0a0a0a] ...">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<MainContent />} />
+          <Route path="/sc" element={<MainContent />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

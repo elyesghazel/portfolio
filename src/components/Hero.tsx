@@ -57,15 +57,6 @@ export default function Hero() {
               className="w-full h-full object-cover hover:grayscale-0 transition-all duration-700 ease-in-out scale-110 hover:scale-100"
             />
           </div>
-
-          <div className="absolute -bottom-4 -right-4 bg-[#0a0a0a] border border-white/10 p-3 rounded-xl hidden md:block">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-tighter">
-                Open for ideas!
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
