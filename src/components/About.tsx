@@ -1,17 +1,13 @@
 export default function About() {
   return (
-    <section className="w-full max-w-4xl mx-auto px-6 py-10">
+    <section className="w-full max-w-4xl mx-auto py-10" id="about">
       <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-12 relative overflow-hidden">
-        <div className="absolute right-[-20px] top-[-20px] opacity-[0.03] select-none">
-          <span className="text-[150px] font-bold">15</span>
-        </div>
-
         <div className="relative z-10">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
             <span className="text-blue-500 mr-2">01.</span> Background
           </h2>
 
-          <div className="space-y-6 text-slate-400 leading-relaxed text-lg">
+          <div className="space-y-6 text-slate-400 leading-relaxed text-md">
             <p>
               Ich habe mit{" "}
               <span className="text-white font-medium">8 Jahren</span>{" "}
@@ -31,8 +27,10 @@ export default function About() {
               <span className="text-white font-medium">System-Architektur</span>
               . Ich hoste meine eigenen Dienste - von Mailservern über
               Git-Instanzen bis hin zu Monitoring-Tools - und habe mit{" "}
-              <span className="text-emerald-400">slideplate.ch</span> bewiesen,
-              dass ich Hardware, Software und Business verbinden kann.
+              <span className="text-emerald-400 underline underline-offset-5 hover:text-emerald-300 transition-colors">
+                <a href="https://slideplate.ch">slideplate.ch</a>
+              </span>{" "}
+              bewiesen, dass ich Hardware, Software und Business verbinden kann.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-white/5">

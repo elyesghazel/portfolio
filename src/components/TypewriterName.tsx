@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function TypewriterName() {
   const name = "Elyes Ghazel";
@@ -18,7 +18,9 @@ export default function TypewriterName() {
   return (
     <div className="font-mono font-bold text-xl tracking-tighter flex items-center">
       <span className="text-blue-500 mr-2">&gt;</span>
-      <span>{displayText}</span>
+      <span>
+        <a href="#">{displayText}</a>
+      </span>
       <span className="w-[10px] h-[24px] bg-blue-500 ml-1 animate-pulse-fast"></span>
     </div>
   );

@@ -31,15 +31,12 @@ const skillCategories = [
 
 export default function Skills() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-6 py-20">
+    <section className="w-full max-w-6xl mx-auto py-20" id="skills">
       <div className="flex flex-col items-center mb-16">
         <h2 className="text-3xl font-bold text-white flex items-center">
           <span className="text-blue-500 mr-3">/</span> tech_stack
           <span className="text-blue-500 ml-3">/</span>
         </h2>
-        <p className="text-slate-500 font-mono text-sm mt-2 uppercase tracking-widest">
-          The spectrum of my technical expertise
-        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

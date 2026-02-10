@@ -1,6 +1,9 @@
 export default function Hero() {
   return (
-    <section className="relative pt-32 pb-20 px-6 max-w-6xl mx-auto overflow-hidden">
+    <section
+      className="relative pt-20 pb-20 max-w-6xl mx-auto overflow-hidden"
+      id="hero"
+    >
       {/* Background Glow */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-600/10 blur-[120px] -z-10"></div>
 

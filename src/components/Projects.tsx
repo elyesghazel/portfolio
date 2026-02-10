@@ -9,30 +9,34 @@ export function ProjectCard({
   onClick: () => void;
 }) {
   return (
-    <div
-      onClick={onClick}
-      className={`group cursor-pointer rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-2
+    <section id="projects" className="w-full">
+      <div
+        onClick={onClick}
+        className={`group cursor-pointer rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-2
         ${
           project.type === "swisscom"
             ? "bg-blue-900/10 border-blue-500/20 hover:border-blue-500/50"
             : "bg-white/5 border-white/10 hover:border-emerald-500/50"
         }`}
-    >
-      <div className="flex justify-between items-start mb-4">
-        <span
-          className={`text-xs font-mono px-2 py-1 rounded ${project.type === "swisscom" ? "bg-blue-500/20 text-blue-300" : "bg-emerald-500/20 text-emerald-300"}`}
-        >
-          {project.type === "swisscom" ? "Swisscom" : "Personal"}
-        </span>
-        <span className="text-xs text-slate-500 font-mono">{project.date}</span>
+      >
+        <div className="flex justify-between items-start mb-4">
+          <span
+            className={`text-xs font-mono px-2 py-1 rounded ${project.type === "swisscom" ? "bg-blue-500/20 text-blue-300" : "bg-emerald-500/20 text-emerald-300"}`}
+          >
+            {project.type === "swisscom" ? "Swisscom" : "Personal"}
+          </span>
+          <span className="text-xs text-slate-500 font-mono">
+            {project.date}
+          </span>
+        </div>
+        <h3 className="text-xl font-bold text-slate-100 group-hover:text-white mb-2">
+          {project.title}
+        </h3>
+        <p className="text-sm text-slate-400 line-clamp-3">
+          {project.shortDescription}
+        </p>
       </div>
-      <h3 className="text-xl font-bold text-slate-100 group-hover:text-white mb-2">
-        {project.title}
-      </h3>
-      <p className="text-sm text-slate-400 line-clamp-3">
-        {project.shortDescription}
-      </p>
-    </div>
+    </section>
   );
 }
 
@@ -64,7 +68,7 @@ export function SwisscomTimeline({
   const scProjects = projects.filter((p) => p.type === "swisscom");
 
   return (
-    <div className="relative max-w-4xl mx-auto py-10">
+    <div className="relative mx-auto py-10">
       <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent transform md:-translate-x-1/2" />
 
       <div className="space-y-16">

@@ -7,6 +7,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Über mich", href: "#about" },
+    { name: "Skills", href: "#skills" },
     { name: "Projekte", href: "#projects" },
     { name: "Swisscom", href: "#experience" },
     { name: "Kontakt", href: "#contact" },
