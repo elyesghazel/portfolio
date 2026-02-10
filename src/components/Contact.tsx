@@ -25,7 +25,7 @@ export default function Contact() {
       icon: <Github className="w-6 h-6" />,
       href: "https://git.elyesghazel.ch",
       color: "hover:text-white",
-      glow: "group-hover:bg-white/5",
+      glow: "group-hover:bg-purple-500/10",
     },
     {
       label: "Email",
