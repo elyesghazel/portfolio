@@ -24,6 +24,7 @@ function MainContent() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-200 selection:bg-blue-500/30 font-mono overflow-x-hidden">
+      <Navbar />
       <main className="pt-24 max-w-6xl mx-auto px-4 flex flex-col items-center space-y-32">
         <Reveal>
           <Hero />
@@ -155,7 +156,6 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-[#0a0a0a] ...">
-        <Navbar />
         <Routes>
           <Route path="/" element={<MainContent />} />
           <Route path="/sc" element={<MainContent />} />
