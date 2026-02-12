@@ -8,5 +8,5 @@ shortDescription: "..."
 ---
 
 ```
-no description yet
+Bei Sitelab lernst du vor allem mit JavaScript und TypeScript zu programmieren. Du nutzt diese Sprachen für Frontend (zum Beispiel mit React oder Next.js) und Backend (mit Node.js oder NestJS) Entwicklung.
 ```
