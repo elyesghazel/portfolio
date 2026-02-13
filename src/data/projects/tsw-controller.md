@@ -21,3 +21,7 @@ Mein Kollege wollte TSW25 nicht mehr mit der Tastatur spielen. Also habe ich ein
 ## Herausforderungen
 
 Das Schwierigste war das Entprellen der Schalter und die Kommunikation über USB-HID so zu gestalten, dass das Spiel es als echten Controller erkennt.
+
+## Cooles zeugs
+
+Es war ein sehr spannendes projekt
