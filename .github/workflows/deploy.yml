@@ -13,6 +13,8 @@ jobs:
 
       - name: Deploy to Docker
         run: |
+          git config --global --add safe.directory /opt/docker/websites/swisscom/react-portfolio
+
           cd /opt/docker/websites/swisscom/react-portfolio/
 
           git pull origin main
