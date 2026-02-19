@@ -13,6 +13,8 @@ jobs:
 
       - name: Deploy to Docker
         run: |
-          # Geändert von docker-compose.yml zu compose.yml
-          docker compose -f /opt/docker/websites/swisscom/react-portfolio/compose.yml pull
-          docker compose -f /opt/docker/websites/swisscom/react-portfolio/compose.yml up -d --build
+          cd /opt/docker/websites/swisscom/react-portfolio/
+
+          git pull origin main
+
+          docker compose -f compose.yml up -d --build
