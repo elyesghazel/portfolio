@@ -48,7 +48,6 @@ function MainContent() {
             <div className="flex flex-col items-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center">
                 <span className="text-blue-500 mr-3">/</span> private_projekte
-                test
                 <span className="text-blue-500 ml-3">/</span>
               </h2>
             </div>
