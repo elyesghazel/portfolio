@@ -1,4 +1,4 @@
-name: Deployment Portfolio
+name: Deployment Portfolio - self Hosted
 on:
   push:
     branches:
