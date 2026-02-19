@@ -26,7 +26,7 @@ export default function About() {
               (Kotlin/Spring Boot/React) und{" "}
               <span className="text-white font-medium">System-Architektur</span>
               . Ich hoste meine eigenen Dienste - von Mailservern über
-              Git-Instanzen bis hin zu Monitoring-Tools - und habe mit{" "}
+              Git-Instanzen bis hin zu Monitoring-Tools und habe mit{" "}
               <span className="text-emerald-400 underline underline-offset-5 hover:text-emerald-300 transition-colors">
                 <a href="https://slideplate.ch">slideplate.ch</a>
               </span>{" "}
