@@ -23,7 +23,7 @@ export default function Contact() {
       label: "GitHub",
       sub: "Code Repositories",
       icon: <Github className="w-6 h-6" />,
-      href: "https://git.elyesghazel.ch",
+      href: "https://github.com/elyesghazel",
       color: "hover:text-white",
       glow: "group-hover:bg-purple-500/10",
     },
