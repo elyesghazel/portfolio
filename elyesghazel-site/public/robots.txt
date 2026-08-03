@@ -1,8 +1,4 @@
-User-Agent: *
+User-agent: *
 Allow: /
 
-User-Agent: *
-Disallow: /api
-
-User-Agent: *
-Disallow: /static
+Sitemap: https://elyesghazel.ch/sitemap.xml

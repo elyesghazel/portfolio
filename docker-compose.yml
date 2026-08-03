@@ -1,12 +1,11 @@
 services:
   main-site:
-    build: . # Sagt Docker: Nutze das Dockerfile im selben Ordner
+    build: .
     container_name: main-site
     restart: always
     networks:
       - traefik_proxy
-    # VOLUMES FÜR DEN CODE KOMMEN RAUS!
-    # Nur die nginx.conf bleibt, falls du eine spezielle hast.
+    # Only the nginx config is mounted; the built site is baked into the image.
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
