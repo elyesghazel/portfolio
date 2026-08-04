@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Section from "./components/Section";
+import Featured from "./components/Featured";
 import ProjectView from "./components/ProjectView";
 import RichText from "./components/RichText";
 import Link, { usePath } from "./router";
@@ -65,7 +66,9 @@ function Home() {
           </dl>
         </Section>
 
-        <Section id="work" label="work">
+        <Featured />
+
+        <Section id="work" label="more work">
           <ol className="divide-y divide-rule border-y border-rule">
             {work.map((item) => (
               <li key={item.title} className="py-6">

@@ -1,6 +1,7 @@
 import type { ProjectPage } from "../content";
 import Header from "./Header";
 import Footer from "./Footer";
+import Figure from "./Figure";
 import Link from "../router";
 
 export default function ProjectView({ project }: { project: ProjectPage }) {
@@ -40,6 +41,14 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
                 </span>
               </a>
             </p>
+          )}
+
+          {project.images && project.images.length > 0 && (
+            <div className="mt-12 space-y-8">
+              {project.images.map((image) => (
+                <Figure key={image.src} image={image} />
+              ))}
+            </div>
           )}
 
           <div className="mt-12 space-y-5">
