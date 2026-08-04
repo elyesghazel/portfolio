@@ -2,11 +2,12 @@ import { useEffect, useRef } from "react";
 
 /**
  * A quiet field of white stars on the black background: they twinkle faintly,
- * drift a few pixels as the cursor moves (parallax by depth), and every few
- * seconds one streaks across as a shooting star. A handful carry the barest
- * cool/warm tint so it isn't clinically flat. Purely decorative: fixed behind
- * everything, never captures pointer events, and goes still under
- * prefers-reduced-motion.
+ * drift slowly on their own, shift a few pixels with the cursor and a little
+ * more as the page scrolls (parallax by depth), and every few seconds one
+ * streaks across as a shooting star. A handful carry the barest cool/warm tint
+ * so it isn't clinically flat. Positions wrap seamlessly, so drift and scroll
+ * never open gaps. Purely decorative: fixed behind everything, never captures
+ * pointer events, and goes still under prefers-reduced-motion.
  */
 
 type Rgb = [number, number, number];
@@ -14,6 +15,8 @@ type Rgb = [number, number, number];
 type Star = {
   x: number;
   y: number;
+  vx: number; // slow autonomous drift, px/s
+  vy: number;
   r: number;
   depth: number; // 0..1, drives parallax strength and brightness
   baseAlpha: number;
@@ -36,6 +39,7 @@ const WHITE: Rgb = [255, 255, 255];
 const COOL: Rgb = [201, 214, 255];
 const WARM: Rgb = [255, 226, 189];
 const MAX_SHIFT = 14; // px of cursor parallax at the screen edge
+const SCROLL_PARALLAX = 0.15; // how much the field trails the page scroll
 
 function pickTint(): Rgb {
   const r = Math.random();
@@ -66,14 +70,19 @@ export default function Starfield() {
 
     const target = { x: 0, y: 0 };
     const cur = { x: 0, y: 0 };
+    const scroll = { target: 0, cur: 0 };
 
     function seed() {
       const count = Math.round(Math.min(190, (width * height) / 9000));
       stars = Array.from({ length: count }, () => {
         const depth = Math.random();
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + depth * 3; // 1..4 px/s, deeper = a touch faster
         return {
           x: Math.random() * width,
           y: Math.random() * height,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
           r: 0.4 + depth * 1.1,
           depth,
           baseAlpha: 0.16 + depth * 0.5,
@@ -84,11 +93,15 @@ export default function Starfield() {
       });
     }
 
-    function drawStar(s: Star, alpha: number, ox: number, oy: number) {
+    function wrap(v: number, max: number) {
+      return ((v % max) + max) % max;
+    }
+
+    function drawStar(s: Star, alpha: number, px: number, py: number) {
       ctx!.globalAlpha = alpha;
       ctx!.fillStyle = `rgb(${s.tint[0]},${s.tint[1]},${s.tint[2]})`;
       ctx!.beginPath();
-      ctx!.arc(s.x + ox, s.y + oy, s.r, 0, Math.PI * 2);
+      ctx!.arc(px, py, s.r, 0, Math.PI * 2);
       ctx!.fill();
     }
 
@@ -104,7 +117,7 @@ export default function Starfield() {
       seed();
       if (reduce) {
         ctx!.clearRect(0, 0, width, height);
-        for (const s of stars) drawStar(s, s.baseAlpha * 0.8, 0, 0);
+        for (const s of stars) drawStar(s, s.baseAlpha * 0.8, s.x, s.y);
         ctx!.globalAlpha = 1;
       }
     }
@@ -131,13 +144,18 @@ export default function Starfield() {
 
       cur.x += (target.x - cur.x) * 0.06;
       cur.y += (target.y - cur.y) * 0.06;
+      scroll.cur += (scroll.target - scroll.cur) * 0.1;
 
       ctx!.clearRect(0, 0, width, height);
 
       for (const s of stars) {
+        s.x = wrap(s.x + s.vx * dt, width);
+        s.y = wrap(s.y + s.vy * dt, height);
         s.tw += s.twSpeed * dt;
         const twinkle = 0.7 + 0.3 * Math.sin(s.tw);
-        drawStar(s, s.baseAlpha * twinkle, cur.x * s.depth, cur.y * s.depth);
+        const px = wrap(s.x + cur.x * s.depth, width);
+        const py = wrap(s.y + (cur.y + scroll.cur) * s.depth, height);
+        drawStar(s, s.baseAlpha * twinkle, px, py);
       }
       ctx!.globalAlpha = 1;
 
@@ -186,6 +204,10 @@ export default function Starfield() {
       target.y = ((e.clientY - height / 2) / (height / 2)) * MAX_SHIFT;
     }
 
+    function onScroll() {
+      scroll.target = -window.scrollY * SCROLL_PARALLAX;
+    }
+
     function onVisibility() {
       if (document.hidden) {
         cancelAnimationFrame(raf);
@@ -199,8 +221,10 @@ export default function Starfield() {
     window.addEventListener("resize", resize);
 
     if (!reduce) {
+      onScroll();
       raf = requestAnimationFrame(frame);
       document.addEventListener("visibilitychange", onVisibility);
+      window.addEventListener("scroll", onScroll, { passive: true });
       if (canHover) window.addEventListener("pointermove", onPointer, { passive: true });
     }
 
@@ -208,6 +232,7 @@ export default function Starfield() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
