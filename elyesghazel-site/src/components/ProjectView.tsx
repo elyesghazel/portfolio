@@ -1,7 +1,8 @@
 import type { ProjectPage } from "../content";
 import Header from "./Header";
 import Footer from "./Footer";
-import Figure from "./Figure";
+import Gallery from "./Gallery";
+import Prose from "./Prose";
 import Link from "../router";
 
 export default function ProjectView({ project }: { project: ProjectPage }) {
@@ -44,11 +45,7 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
           )}
 
           {project.images && project.images.length > 0 && (
-            <div className="mt-12 space-y-8">
-              {project.images.map((image) => (
-                <Figure key={image.src} image={image} />
-              ))}
-            </div>
+            <Gallery images={project.images} />
           )}
 
           <div className="mt-12 space-y-5">
@@ -59,6 +56,9 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
                     key={index}
                     className="pt-6 text-sm uppercase tracking-[0.2em] text-ink"
                   >
+                    <span aria-hidden className="text-key">
+                      //{" "}
+                    </span>
                     {block.text}
                   </h2>
                 );
@@ -69,17 +69,23 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
                   <ul key={index} className="space-y-1.5">
                     {block.items.map((item) => (
                       <li key={item} className="flex gap-3">
-                        <span aria-hidden className="text-faint">
+                        <span aria-hidden className="text-key">
                           -
                         </span>
-                        <span>{item}</span>
+                        <span>
+                          <Prose text={item} />
+                        </span>
                       </li>
                     ))}
                   </ul>
                 );
               }
 
-              return <p key={index}>{block.text}</p>;
+              return (
+                <p key={index}>
+                  <Prose text={block.text} />
+                </p>
+              );
             })}
           </div>
         </article>

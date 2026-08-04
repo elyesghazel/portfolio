@@ -17,11 +17,14 @@ export default function Featured() {
       </h2>
 
       <article className="mt-8 border border-rule">
-        <Link to={`/projects/${featured.slug}`} className="group block">
+        <Link
+          to={`/projects/${featured.slug}`}
+          className="group block overflow-hidden border-b border-rule"
+        >
           <Img
             src={featured.image.src}
             alt={featured.image.alt}
-            className="block aspect-[16/10] w-full border-b border-rule object-cover grayscale transition duration-500 group-hover:grayscale-0"
+            className="block aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
           />
         </Link>
 

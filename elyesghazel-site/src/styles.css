@@ -12,8 +12,13 @@
   --color-rule: #232323;
   --color-paper: #000000;
 
-  /* The one colour on the site: SlidePlate's brand red. Used for that link only. */
+  /* SlidePlate's brand red. Used for that link only. */
   --color-accent: #c47070;
+
+  /* Stealthy project only: keyword highlights. Green = software/attacks,
+     amber = hardware/electronics. Terminal palette for the hacker badge. */
+  --color-key: #7fd39b;
+  --color-hw: #d8b46a;
 }
 
 @layer base {
