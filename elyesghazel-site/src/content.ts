@@ -167,12 +167,12 @@ export const projects: ProjectPage[] = [
           "The bare board, before assembly. 'PUT THAT BACK' hides under the ESP32 footprint; the note by the e-ink connector reads, upside-down, 'if you can read this, you are holding it the wrong way.'",
       },
       {
-        src: "/stealthy-kicad.png",
+        src: "/stealthy-kicad.jpg",
         alt: "The Stealthy PCB layout in KiCad",
         caption: "The layout in KiCad. Footprints, placement and routing, all done by hand.",
       },
       {
-        src: "/stealthy-schematic.png",
+        src: "/stealthy-schematic.jpg",
         alt: "The Stealthy schematic",
         caption: "The schematic: ESP32-S3, e-ink over SPI, IR, buttons, power path and kill switch.",
       },
