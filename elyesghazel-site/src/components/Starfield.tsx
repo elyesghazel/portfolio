@@ -7,7 +7,8 @@ import { useEffect, useRef } from "react";
  * streaks across as a shooting star. A handful carry the barest cool/warm tint
  * so it isn't clinically flat. Positions wrap seamlessly, so drift and scroll
  * never open gaps. Purely decorative: fixed behind everything, never captures
- * pointer events, and goes still under prefers-reduced-motion.
+ * pointer events. Under prefers-reduced-motion it keeps a slower ambient drift
+ * but drops the shooting stars and eases the parallax.
  */
 
 type Rgb = [number, number, number];
@@ -59,6 +60,7 @@ export default function Starfield() {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const m = reduce ? 0.6 : 1; // motion scale: softer for reduced-motion
 
     let width = 0;
     let height = 0;
@@ -77,7 +79,7 @@ export default function Starfield() {
       stars = Array.from({ length: count }, () => {
         const depth = Math.random();
         const angle = Math.random() * Math.PI * 2;
-        const speed = 1 + depth * 3; // 1..4 px/s, deeper = a touch faster
+        const speed = (2 + depth * 3) * m; // ~2..5 px/s, deeper = a touch faster
         return {
           x: Math.random() * width,
           y: Math.random() * height,
@@ -115,11 +117,6 @@ export default function Starfield() {
       canvas!.style.height = `${height}px`;
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       seed();
-      if (reduce) {
-        ctx!.clearRect(0, 0, width, height);
-        for (const s of stars) drawStar(s, s.baseAlpha * 0.8, s.x, s.y);
-        ctx!.globalAlpha = 1;
-      }
     }
 
     function spawnShooter() {
@@ -152,14 +149,14 @@ export default function Starfield() {
         s.x = wrap(s.x + s.vx * dt, width);
         s.y = wrap(s.y + s.vy * dt, height);
         s.tw += s.twSpeed * dt;
-        const twinkle = 0.7 + 0.3 * Math.sin(s.tw);
+        const twinkle = 0.6 + 0.4 * Math.sin(s.tw);
         const px = wrap(s.x + cur.x * s.depth, width);
         const py = wrap(s.y + (cur.y + scroll.cur) * s.depth, height);
         drawStar(s, s.baseAlpha * twinkle, px, py);
       }
       ctx!.globalAlpha = 1;
 
-      if (now >= nextShooter && shooters.length < 2) {
+      if (!reduce && now >= nextShooter && shooters.length < 2) {
         spawnShooter();
         nextShooter = now + 4000 + Math.random() * 5500;
       }
@@ -200,12 +197,12 @@ export default function Starfield() {
     }
 
     function onPointer(e: PointerEvent) {
-      target.x = ((e.clientX - width / 2) / (width / 2)) * MAX_SHIFT;
-      target.y = ((e.clientY - height / 2) / (height / 2)) * MAX_SHIFT;
+      target.x = ((e.clientX - width / 2) / (width / 2)) * MAX_SHIFT * m;
+      target.y = ((e.clientY - height / 2) / (height / 2)) * MAX_SHIFT * m;
     }
 
     function onScroll() {
-      scroll.target = -window.scrollY * SCROLL_PARALLAX;
+      scroll.target = -window.scrollY * SCROLL_PARALLAX * m;
     }
 
     function onVisibility() {
@@ -218,15 +215,12 @@ export default function Starfield() {
     }
 
     resize();
+    onScroll();
+    raf = requestAnimationFrame(frame);
     window.addEventListener("resize", resize);
-
-    if (!reduce) {
-      onScroll();
-      raf = requestAnimationFrame(frame);
-      document.addEventListener("visibilitychange", onVisibility);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      if (canHover) window.addEventListener("pointermove", onPointer, { passive: true });
-    }
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    if (canHover) window.addEventListener("pointermove", onPointer, { passive: true });
 
     return () => {
       cancelAnimationFrame(raf);
