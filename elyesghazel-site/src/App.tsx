@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Section from "./components/Section";
 import Featured from "./components/Featured";
+import Starfield from "./components/Starfield";
 import ProjectView from "./components/ProjectView";
 import RichText from "./components/RichText";
 import Link, { usePath } from "./router";
@@ -27,11 +28,22 @@ export default function App() {
       : `${site.name} - Software Engineer`;
   }, [project]);
 
-  if (path.startsWith("/projects/")) {
-    return project ? <ProjectView project={project} /> : <NotFound />;
-  }
+  const content = path.startsWith("/projects/") ? (
+    project ? (
+      <ProjectView project={project} />
+    ) : (
+      <NotFound />
+    )
+  ) : (
+    <Home />
+  );
 
-  return <Home />;
+  return (
+    <>
+      <Starfield />
+      {content}
+    </>
+  );
 }
 
 function Home() {
