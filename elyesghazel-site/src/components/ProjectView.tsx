@@ -7,14 +7,16 @@ import Link from "../router";
 
 export default function ProjectView({ project }: { project: ProjectPage }) {
   return (
-    <div className="min-h-screen">
+    <>
       <Header variant="project" />
 
-      <main className="mx-auto max-w-2xl px-6 pb-4">
-        <article className="pt-16 md:pt-24">
-          <p className="text-sm text-faint">// project</p>
+      <main className="wrap">
+        <article className="max-w-3xl pt-16 md:pt-24">
+          <p className="text-sm text-faint">
+            <span className="text-[var(--blue)]">//////////</span> project
+          </p>
 
-          <h1 className="mt-4 text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-[-0.045em] text-ink sm:text-6xl">
             {project.title}
           </h1>
 
@@ -22,7 +24,7 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
             {project.role} · {project.period}
           </p>
 
-          <p className="mt-6 max-w-lg">{project.summary}</p>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed">{project.summary}</p>
 
           <p className="mt-6 border-y border-rule py-3 text-sm text-faint">
             {project.tags.join("  ·  ")}
@@ -48,7 +50,7 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
             <Gallery images={project.images} />
           )}
 
-          <div className="mt-12 space-y-5">
+          <div className="mt-12 max-w-2xl space-y-5 text-dim [&_p]:leading-[1.75]">
             {project.blocks.map((block, index) => {
               if (block.type === "h") {
                 return (
@@ -95,9 +97,9 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
             <span aria-hidden>&larr;</span> back to everything else
           </Link>
         </p>
-
-        <Footer />
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }

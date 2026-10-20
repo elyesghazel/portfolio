@@ -17,12 +17,22 @@ export const site = {
 export const hero = {
   /** One sentence. Resist the urge to add a second. */
   line: "I build software end to end: backends, web apps, the circuit boards, and the servers underneath.",
-  facts: [
-    { label: "writing code", value: "8+ years" },
-    { label: "apprenticeship", value: "2nd year, EFZ" },
-    { label: "slideplate", value: "founder, since 2025" },
+  /** The row under the name. "local time" is filled in live by the page. */
+  meta: [
+    { label: "role", lines: ["software engineer", "apprentice, EFZ"] },
+    { label: "at", lines: ["Swisscom, 2nd year", "Zürich, CH"] },
+    { label: "now", lines: ["running SlidePlate", "since Dec 2025"] },
+  ],
+  /** Three big numbers. `href` scrolls to where the claim is backed up. */
+  proof: [
+    { value: "8+", text: "years writing code, starting with Minecraft plugins", href: "#about" },
+    { value: "~40", text: "containers on a server I run myself", href: "#infra" },
+    { value: "4", text: "countries SlidePlate ships to", href: "#slideplate" },
   ],
 };
+
+/** Big sentence on the left of the about section. */
+export const pull = "I build the thing that isn't there yet.";
 
 export const about: string[] = [
   "I started at eight, writing Minecraft plugins in Java because the server was missing a feature I wanted. That is still more or less the pattern: I build the thing that isn't there yet.",
@@ -53,51 +63,144 @@ export const stack: { group: string; items: string[] }[] = [
   },
 ];
 
-export type WorkItem = {
+/**
+ * The work section, rendered as `git log --graph`: newest first, one commit
+ * per project. `color` tints the node, the chips and the stage behind the
+ * visual. Hrefs starting with "/" route client-side.
+ *
+ * Terminal stages use a tiny line syntax:
+ *   "$ cmd"  prompt     "+ text"  green tick     "  text"  plain output
+ */
+export type Stage =
+  | { kind: "image"; src: string; alt: string; tall?: boolean; alt2?: { src: string; alt: string } }
+  | { kind: "term"; title: string; lines: string[] };
+
+export type Commit = {
+  id: string;
   title: string;
-  period: string;
-  role: string;
-  description: string;
-  tags: string[];
-  /** Links to /projects/<slug> if a page exists in `projects` below. */
-  slug?: string;
-  href?: string;
+  date: string;
+  color: string;
+  /** First ref is the coloured one, the rest are muted. */
+  refs: string[];
+  one: string;
+  why: string;
+  facts: { label: string; value: string }[];
+  links: { label: string; href: string }[];
+  stage: Stage;
+  caption?: string;
 };
 
-export const work: WorkItem[] = [
+export const log: Commit[] = [
   {
+    id: "slideplate",
     title: "SlidePlate",
-    period: "2025.12 - now",
-    role: "founder",
-    description:
-      "3D-printed foldable licence plate holders for supermoto and enduro bikes. Product design, production, storefront, and the tooling that tells me whether any of it makes money.",
-    tags: ["Fusion 360", "ASA+", "Shopify", "Next.js", "Prisma"],
-    slug: "slideplate",
+    date: "now",
+    color: "#e0686b",
+    refs: ["HEAD -> main", "since Dec 2025"],
+    one: "Foldable licence plate holders for supermoto and enduro bikes.",
+    why: "Short, 3D-printed in ASA+, and they bolt straight on. Product design, production, storefront, and the tracker that tells me whether any of it makes money.",
+    facts: [
+      { label: "fitments", value: "Yamaha · KTM EXC · TM SMR · Beta · universal" },
+      { label: "built with", value: "Fusion 360 · ASA+ · Shopify · Next.js · Prisma" },
+    ],
+    links: [
+      { label: "Read the story", href: "/projects/slideplate" },
+      { label: "slideplate.ch", href: "https://slideplate.ch" },
+    ],
+    stage: {
+      kind: "term",
+      title: "slideplate - tracker",
+      lines: [
+        "$ shopify revenue",
+        "  looks great",
+        "$ profit = revenue - filament - packaging - postage - warranty",
+        "  a lot smaller",
+        "+ one number I trust",
+      ],
+    },
+    caption: "Why the profit tracker exists, from the write-up",
   },
   {
+    id: "stealthy",
+    title: "Stealthy",
+    date: "Mar 2026",
+    color: "#7fd39b",
+    refs: ["featured build", "C++ · KiCad"],
+    one: "A pocket security-research badge on the ESP32-S3.",
+    why: "Custom circuit board, e-ink UI, WiFi and infrared tooling. Board, firmware and case designed and written from an empty repo in about a month.",
+    facts: [
+      { label: "silicon", value: "ESP32-S3, 2.13\" e-ink, IR" },
+      { label: "firmware", value: "C++ from scratch, app framework, web UI" },
+      { label: "built in", value: "~1 month" },
+    ],
+    links: [
+      { label: "Read the story", href: "/projects/stealthy" },
+      { label: "Source", href: "https://github.com/elyesghazel/stealthy-firmware" },
+    ],
+    stage: {
+      kind: "image",
+      src: "/log/stealthy-hand.webp",
+      alt: "The finished Stealthy badge, held in one hand",
+      tall: true,
+    },
+    caption: "The finished board, running its own firmware",
+  },
+  {
+    id: "tsw25",
     title: "TSW25 Fahrstand",
-    period: "2025.03 - 2025.10",
-    role: "hardware & firmware",
-    description:
-      "A physical train driver's desk for Train Sim World 25. Custom PCB, hand-soldered, 3D-printed housing, self-designed levers on potentiometers.",
-    tags: ["C++", "Arduino", "PCB", "CAD", "3D printing"],
-    slug: "tsw25-fahrstand",
+    date: "Oct 2025",
+    color: "#f5b83d",
+    refs: ["sold", "C++ · Arduino"],
+    one: "A physical train driver's desk for Train Sim World 25.",
+    why: "A friend was done driving trains with a keyboard. Custom PCB, hand-soldered, 3D-printed housing, self-designed levers on potentiometers. Seven months of work.",
+    facts: [
+      { label: "controls", value: "door buttons, PZB toggles, 3D-printed levers" },
+      { label: "under the hood", value: "Pro Micro · USB-HID · Fusion 360" },
+    ],
+    links: [{ label: "Read the story", href: "/projects/tsw25-fahrstand" }],
+    stage: {
+      kind: "image",
+      src: "/log/tsw25.webp",
+      alt: "The TSW25 Fahrstand, a custom train driver's desk",
+    },
   },
   {
-    title: "self-hosted infrastructure",
-    period: "2023 - now",
-    role: "everything",
-    description:
-      "One server, ~30 containers behind Traefik: mail, Git and CI, dashboards, monitoring, encrypted offsite backups. Every elyesghazel.ch subdomain runs here, including this page.",
-    tags: ["Linux", "Docker", "Traefik", "Forgejo", "restic"],
+    id: "infra",
+    title: "Self-hosted infrastructure",
+    date: "2023",
+    color: "#6f95ff",
+    refs: ["initial commit", "still running"],
+    one: "One server, every elyesghazel.ch subdomain, including this page.",
+    why: "~40 containers behind Traefik: mail, Git and CI, password vault, media, push notifications, monitoring, encrypted offsite backups. When it goes down at 2am it is nobody's problem but mine.",
+    facts: [
+      { label: "stack", value: "Debian · Docker · Traefik · Forgejo · restic" },
+      { label: "watched by", value: "Uptime Kuma, pushing to my phone" },
+    ],
+    links: [{ label: "github.com/elyesghazel", href: "https://github.com/elyesghazel" }],
+    stage: {
+      kind: "term",
+      title: "elyes@server - ~",
+      lines: [
+        "$ docker ps --format '{{.Names}}' | head",
+        "  inf-traefik         reverse proxy, wildcard TLS",
+        "  inf-forgejo         git + CI",
+        "  mailu-front-1       mail",
+        "  apps-vaultwarden    passwords",
+        "  apps-jellyfin       media",
+        "  apps-ntfy           push",
+        "  inf-uptime-kuma     monitoring",
+        "+ restic, nightly 03:30, offsite",
+      ],
+    },
   },
+];
+
+/** One-line extras under the log. */
+export const also = [
   {
-    title: "3D printing shop",
-    period: "2024 - now",
-    role: "design & production",
-    description:
-      "Made-to-order printed parts and small objects, designed and printed here rather than resold.",
-    tags: ["CAD", "3D printing", "Shopify"],
+    name: "3D printing shop",
+    text: "made-to-order printed parts, designed and printed here rather than resold",
+    year: "2024",
     href: "https://shop.elyesghazel.ch",
   },
 ];
@@ -120,28 +223,6 @@ export type ProjectPage = {
   /** Optional gallery, rendered under the intro. Missing files hide themselves. */
   images?: ProjectImage[];
   blocks: Block[];
-};
-
-/**
- * One project gets a framed, image-led card at the top of the work section.
- * `slug` must match an entry in `projects` below.
- */
-export const featured = {
-  slug: "stealthy",
-  label: "featured build",
-  title: "Stealthy",
-  role: "hardware & firmware, solo",
-  tagline:
-    "A pocket-sized security-research badge on the ESP32-S3. Custom circuit board, e-ink UI, WiFi and infrared tooling - board and firmware designed and written from an empty repo in about a month.",
-  image: { src: "/stealthy-hand.jpg", alt: "The finished Stealthy badge, held in one hand" },
-  specs: [
-    { label: "silicon", value: "ESP32-S3" },
-    { label: "firmware", value: "C++, from scratch" },
-    { label: "board", value: "custom, KiCad" },
-    { label: "built in", value: "~1 month" },
-  ],
-  tags: ["ESP32-S3", "C++", "PlatformIO", "KiCad", "PCB design", "e-ink", "802.11", "IR"],
-  repo: { label: "view code", url: "https://github.com/elyesghazel/stealthy-firmware" },
 };
 
 export const projects: ProjectPage[] = [
@@ -310,15 +391,18 @@ export const projects: ProjectPage[] = [
   },
 ];
 
+/** Rows under the big email address. The address itself comes from `site`. */
 export const links = [
-  { label: "email", value: site.email, href: `mailto:${site.email}` },
-  { label: "github", value: "github.com/elyesghazel", href: "https://github.com/elyesghazel" },
-  {
-    label: "linkedin",
-    value: "linkedin.com/in/elyes-ghazel",
-    href: "https://linkedin.com/in/elyes-ghazel",
-  },
+  { label: "github", value: "elyesghazel", href: "https://github.com/elyesghazel" },
+  { label: "linkedin", value: "Elyes Ghazel", href: "https://linkedin.com/in/elyes-ghazel" },
+  { label: "slideplate", value: "slideplate.ch", href: "https://slideplate.ch" },
+  { label: "shop", value: "3D printing", href: "https://shop.elyesghazel.ch" },
 ];
 
-export const contactNote =
-  "Open to interesting problems, hardware or software. Mail is read fastest.";
+export const contactNote = "Open to interesting problems, hardware or software.";
+
+/** Last line on the page; `strong` is set in the accent colour. */
+export const closing = {
+  text: "Mail is read fastest.",
+  strong: "Let's build something.",
+};
