@@ -1,7 +1,7 @@
 services:
   main-site:
     build: .
-    container_name: main-site
+    container_name: web-main-site
     restart: always
     networks:
       - traefik_proxy
