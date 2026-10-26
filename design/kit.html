@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>ops - elyesghazel.ch design kit</title>
+    <script>
+      (function () {
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="components.css" />
+    <style>
+      /* page-only layout for the kit; everything reusable is in components.css */
+      .page-head { padding: var(--sp-10) 0 var(--sp-8); }
+      .page-head .row { margin-top: var(--sp-2); }
+      .toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+      .toolbar .search { flex: 1 1 14rem; }
+      .toolbar .select { width: auto; min-width: 9rem; }
+      .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: var(--sp-2); }
+      .swatch { border: 1px solid var(--rule); border-radius: var(--radius-1); overflow: hidden; font-size: var(--fs-xs); }
+      .swatch i { display: block; height: 40px; border-bottom: 1px solid var(--rule); }
+      .swatch span { display: block; padding: 6px 8px; color: var(--dim); }
+      .scale > div { display: grid; grid-template-columns: 6rem 1fr; align-items: baseline; gap: var(--sp-4); padding: 6px 0; border-bottom: 1px solid var(--rule); }
+      .scale > div > span:first-child { color: var(--faint); font-size: var(--fs-xs); }
+      .scale > div > span:last-child { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .demo-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+      .side > * + * { margin-top: var(--sp-10); }
+      .form { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+    </style>
+  </head>
+  <body class="dense">
+    <header class="header">
+      <div class="wrap wrap-wide header-in">
+        <a class="wordmark" href="#top"><span class="sub">ops.</span>elyesghazel<span class="tld">.ch</span></a>
+        <nav class="nav" aria-label="Main">
+          <a href="#overview" aria-current="page">overview</a>
+          <a href="#containers">containers</a>
+          <a href="#backups">backups</a>
+          <a href="#events">events</a>
+          <a href="#settings">settings</a>
+        </nav>
+        <button class="theme-toggle" type="button" id="theme" aria-label="Switch theme">
+          <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2" />
+            <path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap wrap-wide" id="top">
+      <div class="page-head">
+        <h1 class="h1">elyes-ghazel-server</h1>
+        <div class="row dim">
+          <span class="tag ok">healthy</span>
+          <span>debian 13 · up 41 days · last check <span class="ink num">12s</span> ago</span>
+          <span class="spacer"></span>
+          <button class="btn btn-sm" type="button" data-toast="Refreshed, 40 containers checked">refresh</button>
+          <button class="btn btn-sm btn-primary" type="button" data-toast="Backup started, restic is running">run backup <span class="arr">&rarr;</span></button>
+        </div>
+      </div>
+
+      <section id="overview">
+        <h2 class="section-label"><span class="slashes">//</span> overview <span class="aside">last 24h</span></h2>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">38<small>/40</small></span>
+            <span class="stat-label">containers up</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">61<small>%</small></span>
+            <span class="stat-label">disk, 244 of 400 GB</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">03:30</span>
+            <span class="stat-label">last backup <span class="stat-delta ok">ok</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">0</span>
+            <span class="stat-label">mail queue</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">2</span>
+            <span class="stat-label">alerts <span class="stat-delta bad">+2 today</span></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="grid-main section">
+        <div>
+          <section id="containers">
+            <h2 class="section-label"><span class="slashes">//</span> containers <span class="aside">40 total</span></h2>
+
+            <div class="toolbar">
+              <label class="search">
+                <span class="sr-only">Filter containers</span>
+                <input class="input" type="search" placeholder="filter by name or image" />
+              </label>
+              <select class="select" aria-label="Status">
+                <option>all states</option>
+                <option>running</option>
+                <option>unhealthy</option>
+                <option>stopped</option>
+              </select>
+              <button class="btn" type="button">restart</button>
+              <button class="btn btn-danger" type="button" data-toast="Stopped inf-uptime-kuma" data-kind="bad">stop</button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>name</th>
+                    <th>state</th>
+                    <th class="hide-sm">image</th>
+                    <th class="r">cpu</th>
+                    <th class="r">mem</th>
+                    <th class="r hide-sm">up</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="name">inf-traefik</td>
+                    <td><span class="tag ok">running</span></td>
+                    <td class="dim hide-sm">traefik:3.5</td>
+                    <td class="r">0.4%</td>
+                    <td class="r">61 MB</td>
+                    <td class="r dim hide-sm">41d</td>
+                  </tr>
+                  <tr>
+                    <td class="name">inf-forgejo</td>
+                    <td><span class="tag ok">running</span></td>
+                    <td class="dim hide-sm">forgejo:12</td>
+                    <td class="r">1.2%</td>
+                    <td class="r">212 MB</td>
+                    <td class="r dim hide-sm">41d</td>
+                  </tr>
+                  <tr class="is-bad">
+                    <td class="name">apps-jellyfin</td>
+                    <td><span class="tag bad">restarting</span></td>
+                    <td class="dim hide-sm">jellyfin:10.11</td>
+                    <td class="r">-</td>
+                    <td class="r">-</td>
+                    <td class="r dim hide-sm">3m</td>
+                  </tr>
+                  <tr>
+                    <td class="name">mailu-front-1</td>
+                    <td><span class="tag warn">unhealthy</span></td>
+                    <td class="dim hide-sm">mailu/nginx:2024.06</td>
+                    <td class="r">0.1%</td>
+                    <td class="r">18 MB</td>
+                    <td class="r dim hide-sm">12d</td>
+                  </tr>
+                  <tr>
+                    <td class="name">apps-vaultwarden</td>
+                    <td><span class="tag ok">running</span></td>
+                    <td class="dim hide-sm">vaultwarden:1.34</td>
+                    <td class="r">0.0%</td>
+                    <td class="r">34 MB</td>
+                    <td class="r dim hide-sm">41d</td>
+                  </tr>
+                  <tr>
+                    <td class="name">apps-ntfy</td>
+                    <td><span class="tag info">updating</span></td>
+                    <td class="dim hide-sm">ntfy:2.14</td>
+                    <td class="r">2.8%</td>
+                    <td class="r">22 MB</td>
+                    <td class="r dim hide-sm">1m</td>
+                  </tr>
+                  <tr>
+                    <td class="name">old-homepage</td>
+                    <td><span class="tag">stopped</span></td>
+                    <td class="dim hide-sm">homepage:1.4</td>
+                    <td class="r faint">-</td>
+                    <td class="r faint">-</td>
+                    <td class="r dim hide-sm">-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="backups" class="section">
+            <h2 class="section-label"><span class="slashes">//</span> backups <span class="aside">restic, offsite</span></h2>
+            <div class="grid-2">
+              <div class="card card-pad stack">
+                <div class="row"><span class="ink">nightly</span><span class="spacer"></span><span class="tag ok">ok</span></div>
+                <dl class="kv">
+                  <div><dt>last run</dt><dd class="num">2026-10-26 03:30</dd></div>
+                  <div><dt>duration</dt><dd class="num">4m 12s</dd></div>
+                  <div><dt>added</dt><dd class="num">1.8 GB</dd></div>
+                  <div><dt>repo size</dt><dd class="num">212 GB</dd></div>
+                </dl>
+                <div>
+                  <div class="row small"><span class="dim">quota</span><span class="spacer"></span><span class="num">71%</span></div>
+                  <div class="meter warn" style="margin-top: 6px"><i style="width: 71%"></i></div>
+                </div>
+              </div>
+              <div class="empty">
+                <span class="empty-mark" aria-hidden="true">// --</span>
+                <p>No restore tests yet</p>
+                <span class="hint">Pick a snapshot and restore it to a scratch folder to prove the backups work.</span>
+                <button class="btn btn-sm" type="button">run a restore test</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="settings" class="section">
+            <h2 class="section-label"><span class="slashes">//</span> settings</h2>
+            <form class="form" onsubmit="event.preventDefault()">
+              <div class="field">
+                <label for="host">host name</label>
+                <input class="input" id="host" value="elyes-ghazel-server" />
+              </div>
+              <div class="field">
+                <label for="topic">ntfy topic</label>
+                <input class="input" id="topic" placeholder="agents" />
+                <span class="hint">where alerts go, reuse an existing topic</span>
+              </div>
+              <div class="field is-bad">
+                <label for="cron">backup schedule</label>
+                <input class="input" id="cron" value="30 3 * *" aria-invalid="true" />
+                <span class="hint">cron needs five fields, this has four</span>
+              </div>
+              <div class="field">
+                <label for="keep">keep snapshots</label>
+                <select class="select" id="keep">
+                  <option>7 daily, 4 weekly</option>
+                  <option>14 daily, 8 weekly</option>
+                </select>
+              </div>
+              <div class="field" style="grid-column: 1 / -1">
+                <label for="note">note</label>
+                <textarea class="textarea" id="note" placeholder="why this changed"></textarea>
+              </div>
+              <div class="row" style="grid-column: 1 / -1">
+                <label class="check"><input type="checkbox" checked /> email on failure</label>
+                <label class="check"><input type="checkbox" /> email on success</label>
+                <label class="switch"><input type="checkbox" checked /><span></span> maintenance mode</label>
+                <span class="spacer"></span>
+                <button class="btn btn-ghost" type="reset">cancel</button>
+                <button class="btn btn-primary" type="submit" data-toast="Settings saved">save</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <aside class="side">
+          <section id="events">
+            <h2 class="section-label"><span class="slashes">//</span> events</h2>
+            <ol class="log">
+              <li class="log-item now"><time>now</time><p>2 alerts open</p><span class="note">jellyfin restarting, mail front unhealthy</span></li>
+              <li class="log-item bad"><time>14:02</time><p>apps-jellyfin exited 137</p><span class="note">out of memory, restarted 3 times</span></li>
+              <li class="log-item warn"><time>11:40</time><p>mailu-front-1 health check slow</p></li>
+              <li class="log-item info"><time>09:15</time><p>ntfy 2.14 pulled</p></li>
+              <li class="log-item ok"><time>03:30</time><p>backup finished</p><span class="note">1.8 GB added, 4m 12s</span></li>
+              <li class="log-item"><time>yesterday</time><p>traefik certs renewed</p></li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 class="section-label"><span class="slashes">//</span> callouts</h2>
+            <div class="stack">
+              <div class="callout bad"><span class="dot bad"></span><span><b>jellyfin is down.</b> Out of memory, three restarts in ten minutes.</span></div>
+              <div class="callout warn"><span class="dot warn"></span><span><b>Disk at 61%.</b> Media folder grew 20 GB this week.</span></div>
+              <div class="callout ok"><span class="dot ok"></span><span><b>Backups verified.</b> Last restore test passed.</span></div>
+              <div class="callout info"><span class="dot info"></span><span><b>Mailu 2025.x is out.</b> Pinned on purpose, read the notes first.</span></div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="section-label"><span class="slashes">//</span> links</h2>
+            <ul class="rows">
+              <li><a href="#top"><span class="dim">git</span><span class="ink">git.elyesghazel.ch</span><span class="arr">&rarr;</span></a></li>
+              <li><a href="#top"><span class="dim">lab</span><span class="ink">lab.elyesghazel.tech</span><span class="arr">&rarr;</span></a></li>
+              <li><a href="#top"><span class="dim">docs</span><span class="ink">docs.elyesghazel.ch</span><span class="arr">&rarr;</span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+
+      <section class="section">
+        <h2 class="section-label"><span class="slashes">//</span> parts <span class="aside">reference</span></h2>
+
+        <div class="grid-2">
+          <div class="stack">
+            <p class="field-label">buttons</p>
+            <div class="demo-row">
+              <button class="btn btn-primary" type="button">primary <span class="arr">&rarr;</span></button>
+              <button class="btn" type="button">secondary</button>
+              <button class="btn btn-danger" type="button">delete</button>
+              <button class="btn btn-ghost" type="button">ghost</button>
+              <button class="btn" type="button" disabled>disabled</button>
+            </div>
+            <div class="demo-row">
+              <button class="btn btn-sm btn-primary" type="button">small</button>
+              <button class="btn btn-sm" type="button">small</button>
+              <button class="btn btn-sm btn-danger" type="button">small</button>
+            </div>
+
+            <p class="field-label" style="margin-top: var(--sp-6)">tags and status</p>
+            <div class="tags">
+              <span class="tag">neutral</span>
+              <span class="tag ok">ok</span>
+              <span class="tag warn">warn</span>
+              <span class="tag bad">bad</span>
+              <span class="tag info">info</span>
+              <span class="tag accent">now</span>
+            </div>
+            <div class="demo-row small dim">
+              <span><span class="dot ok"></span> ok</span>
+              <span><span class="dot warn"></span> warn</span>
+              <span><span class="dot bad"></span> bad</span>
+              <span><span class="dot info"></span> info</span>
+              <span><span class="dot"></span> off</span>
+            </div>
+
+            <p class="field-label" style="margin-top: var(--sp-6)">text</p>
+            <p>Running text in <span class="ink">ink</span>, <span class="dim">dim</span> and <span class="faint">faint</span>. A <a class="link" href="#top">plain link</a> draws its underline on hover; a link inside prose like <a class="link-accent" href="#top">SlidePlate</a> takes the accent. Keys: <kbd>j</kbd> <kbd>k</kbd>, inline <code>docker ps</code>.</p>
+
+            <p class="field-label" style="margin-top: var(--sp-6)">toasts</p>
+            <div class="toast static"><span class="dot ok"></span> Settings saved</div>
+            <div class="toast static"><span class="dot bad"></span> Backup failed: repository locked <button class="btn btn-sm" type="button">retry</button></div>
+          </div>
+
+          <div class="stack">
+            <p class="field-label">type scale</p>
+            <div class="scale">
+              <div><span>3xl 44</span><span style="font-size: var(--fs-3xl); letter-spacing: var(--tracking-tight); line-height: 1.1">Elyes Ghazel</span></div>
+              <div><span>2xl 34</span><span style="font-size: var(--fs-2xl); letter-spacing: var(--tracking-tight)">Stealthy</span></div>
+              <div><span>xl 26</span><span style="font-size: var(--fs-xl)">38/40 up</span></div>
+              <div><span>lg 20</span><span style="font-size: var(--fs-lg)">card title</span></div>
+              <div><span>md 17</span><span style="font-size: var(--fs-md)">lede paragraph</span></div>
+              <div><span>base 15.5</span><span style="font-size: var(--fs-base)">site body text</span></div>
+              <div><span>sm 13.5</span><span style="font-size: var(--fs-sm)">tool body, buttons</span></div>
+              <div><span>xs 12</span><span style="font-size: var(--fs-xs)">labels, tags, captions</span></div>
+            </div>
+
+            <p class="field-label" style="margin-top: var(--sp-6)">colour</p>
+            <div class="swatches">
+              <div class="swatch"><i style="background: var(--bg)"></i><span>--bg</span></div>
+              <div class="swatch"><i style="background: var(--bg-raised)"></i><span>--bg-raised</span></div>
+              <div class="swatch"><i style="background: var(--ink)"></i><span>--ink</span></div>
+              <div class="swatch"><i style="background: var(--body)"></i><span>--body</span></div>
+              <div class="swatch"><i style="background: var(--dim)"></i><span>--dim</span></div>
+              <div class="swatch"><i style="background: var(--faint)"></i><span>--faint</span></div>
+              <div class="swatch"><i style="background: var(--rule)"></i><span>--rule</span></div>
+              <div class="swatch"><i style="background: var(--accent)"></i><span>--accent</span></div>
+              <div class="swatch"><i style="background: var(--ok)"></i><span>--ok</span></div>
+              <div class="swatch"><i style="background: var(--warn)"></i><span>--warn</span></div>
+              <div class="swatch"><i style="background: var(--bad)"></i><span>--bad</span></div>
+              <div class="swatch"><i style="background: var(--info)"></i><span>--info</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>ops.elyesghazel.ch · design kit v3</span>
+        <span><a class="link" href="../">back to the site</a></span>
+      </footer>
+    </main>
+
+    <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+    <script>
+      // theme toggle: same contract as the site (data-theme on <html>, "theme" in localStorage)
+      document.getElementById("theme").addEventListener("click", function () {
+        var root = document.documentElement;
+        var cur = root.dataset.theme ||
+          (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        var next = cur === "dark" ? "light" : "dark";
+        root.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+      });
+
+      // toasts: one at a time, 2.6 s, plain text
+      var box = document.getElementById("toasts"), timer;
+      document.addEventListener("click", function (e) {
+        var el = e.target.closest("[data-toast]");
+        if (!el) return;
+        var t = document.createElement("div");
+        t.className = "toast";
+        var d = document.createElement("span");
+        d.className = "dot " + (el.dataset.kind || "ok");
+        t.append(d, el.dataset.toast);
+        box.replaceChildren(t);
+        clearTimeout(timer);
+        timer = setTimeout(function () { box.replaceChildren(); }, 2600);
+      });
+    </script>
+  </body>
+</html>
