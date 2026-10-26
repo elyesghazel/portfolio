@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      (function () {
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark")
+          t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <title>Ground plane - kit</title>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="components.css" />
+    <style>
+      .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+      main { padding-bottom: 96px; }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="#">
+          <svg viewBox="0 0 26 26" aria-hidden="true">
+            <g stroke="currentColor" stroke-width="2"><path d="M8 1v4M13 1v4M18 1v4M8 21v4M13 21v4M18 21v4M1 8h4M1 13h4M1 18h4M21 8h4M21 13h4M21 18h4" /></g>
+            <rect class="chip-body" x="5" y="5" width="16" height="16" rx="2.5" />
+            <text class="chip-text" x="13" y="16.5" text-anchor="middle" font-size="9" font-weight="800" font-family="Archivo Variable" style="font-stretch: 70%">EG</text>
+          </svg>
+          ops <span class="sub">elyesghazel.ch</span>
+        </a>
+        <nav class="nav" aria-label="Main">
+          <a href="#" aria-current="page">Services</a>
+          <a href="#">Backups</a>
+          <a href="#">Logs</a>
+          <button type="button" class="switch" role="switch" aria-label="Dark mode" id="theme">
+            <span class="knob" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5" /></svg>
+            </span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="sec">
+        <h2><span class="ref cu">U1</span>Services</h2>
+        <p>42 containers on elyes-ghazel-server</p>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="k">running <span class="badge ok">ok</span></div><div class="v">40<small>/ 42</small></div><div class="delta up">+2 since yesterday</div></div>
+        <div class="kpi"><div class="k">disk</div><div class="v">71<small>%</small></div><div class="delta">412 GB free</div></div>
+        <div class="kpi"><div class="k">last backup <span class="badge warn">late</span></div><div class="v">26<small>h</small></div><div class="delta down">expected every 24h</div></div>
+        <div class="kpi"><div class="k">mail queue</div><div class="v">0</div><div class="delta">idle</div></div>
+      </div>
+
+      <div class="sec sm">
+        <h2><span class="ref cu">J2</span>Containers</h2>
+        <div class="row">
+          <input class="input mono" style="width: 220px" placeholder="filter" aria-label="Filter" />
+          <button class="btn primary">Restart all</button>
+        </div>
+      </div>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Image</th><th>Status</th><th class="num">CPU</th><th class="num">Uptime</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>inf-traefik</td><td class="key">traefik:v3.2</td><td><span class="badge ok">running</span></td><td class="num">0.4%</td><td class="num">12d 4h</td><td style="text-align:right"><button class="btn sm">Logs</button></td></tr>
+          <tr><td>mailu-front-1</td><td class="key">mailu/nginx:2024.06</td><td><span class="badge warn">restarting</span></td><td class="num">2.1%</td><td class="num">3m</td><td style="text-align:right"><button class="btn sm">Logs</button></td></tr>
+          <tr><td>apps-jellyfin</td><td class="key">jellyfin/jellyfin:10.10</td><td><span class="badge bad">exited 137</span></td><td class="num">-</td><td class="num">-</td><td style="text-align:right"><button class="btn sm danger">Remove</button></td></tr>
+          <tr><td>apps-ntfy</td><td class="key">binwiederhier/ntfy</td><td><span class="badge info">updating</span></td><td class="num">0.1%</td><td class="num">40s</td><td style="text-align:right"><button class="btn sm">Logs</button></td></tr>
+        </tbody>
+      </table>
+
+      <div class="sec sm"><h2><span class="ref cu">R3</span>Components</h2></div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="ph"><span class="label">Buttons</span></div>
+          <div class="pb row">
+            <button class="btn primary">Deploy <span aria-hidden="true">→</span></button>
+            <button class="btn">Cancel</button>
+            <button class="btn danger">Delete</button>
+            <button class="btn" disabled>Disabled</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><span class="label">Tags and badges</span></div>
+          <div class="pb row">
+            <span class="ref cu">U1</span><span class="ref">since Dec 2025</span>
+            <span class="tag">Docker</span><span class="tag">Traefik</span>
+            <span class="badge ok">ok</span><span class="badge warn">warn</span><span class="badge bad">bad</span><span class="badge info">info</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><span class="label">Form</span></div>
+          <div class="pb" style="display: grid; gap: 16px">
+            <label class="field"><span class="label">Share with</span><input class="input" placeholder="GitHub login" /><span class="hint">They sign in with GitHub.</span></label>
+            <label class="field"><span class="label">Expires</span><select class="select"><option>30 days</option><option>7 days</option></select></label>
+            <label class="field"><span class="label">Name</span><input class="input mono" value="portfolio/redesign v2" aria-invalid="true" /><span class="err">Only a-z, 0-9, / and -.</span></label>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><span class="label">List</span><span class="badge ok">3 live</span></div>
+          <div class="pb">
+            <ul class="list">
+              <li><a href="#"><span class="t">portfolio/redesign-v2</span><span class="d">Portfolio redesign v2</span><span class="m">30d</span></a></li>
+              <li><a href="#"><span class="t">slideplate/cut</span><span class="d">Reel draft, 18s</span><span class="m">7d</span></a></li>
+              <li><a href="#"><span class="t">kmu/baeckerei</span><span class="d">Preview site</span><span class="m">expired</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="empty">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="14" y="14" width="20" height="20" rx="2" /><path d="M19 8v6M24 8v6M29 8v6M19 34v6M24 34v6M29 34v6M8 19h6M8 29h6M34 19h6M34 29h6" /></svg>
+          <div class="t">Nothing connected yet</div>
+          <p>Publish a page with <code>show &lt;dir&gt;</code> and it will appear here.</p>
+          <button class="btn">Read the docs</button>
+        </div>
+        <div style="display: grid; gap: 10px; align-content: start">
+          <div class="toast static"><b>elyes@elyesghazel.ch</b>Copied. Paste it into any mail app.</div>
+          <div class="toast static warn"><b>backup late</b>restic has not run for 26 hours.</div>
+          <div class="toast static bad"><b>deploy failed</b>Exit 1 in pnpm build.</div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      var b = document.getElementById("theme"), r = document.documentElement;
+      function sync() { b.setAttribute("aria-checked", r.dataset.theme === "dark"); }
+      sync();
+      b.onclick = function () {
+        r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
+        try { localStorage.setItem("theme", r.dataset.theme); } catch (e) {}
+        sync();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+/*
+ * Ground plane - design tokens for every elyesghazel.ch surface.
+ * Plain CSS, no build step. Copy this file and design/fonts/ next to each
+ * other; font URLs are relative to this file. See DESIGN.md for usage.
+ *
+ * Dark is the default. Light applies with <html data-theme="light">.
+ * Pages that want to follow the OS until the user picks: set data-theme from
+ * prefers-color-scheme in an inline <script> before first paint.
+ */
+
+/* ---- Fonts (self-hosted, SIL OFL 1.1) ---- */
+
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url(./fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url(./fonts/archivo-latin-ext-wdth-normal.woff2) format("woff2-variations");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./fonts/ibm-plex-mono-latin-ext-400-normal.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./fonts/ibm-plex-mono-latin-ext-500-normal.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ---- Tokens ---- */
+
+:root {
+  /* Surfaces: page, raised (cards, inputs, table head), hover/pressed. */
+  --bg: #0b1a15;
+  --bg-2: #10241d;
+  --bg-3: #163128;
+  /* Text: primary, secondary, tertiary (labels, meta). All AA on --bg and --bg-2. */
+  --fg: #e4ece6;
+  --fg-2: #a9b9af;
+  --fg-3: #8a9c91;
+  /* Hairlines: default divider, stronger (control borders, hover). */
+  --line: #1f3a30;
+  --line-2: #2d4c40;
+  /* Brand accent: copper. Primary actions, refdes tags, focus, one highlight per view. */
+  --accent: #e98a4f;
+  --accent-hi: #ffa872;
+  --accent-ink: #1b0d04;
+  /* Status. Never use --accent for status; never use status colours for brand. */
+  --ok: #5cd394;
+  --warn: #f0cf5a;
+  --bad: #ff6b81;
+  --info: #7cb8ff;
+
+  /* Board palette: identical in both themes (the board is an object, not a surface). */
+  --mask: #12372b;
+  --mask-2: #0d2a21;
+  --copper: #d98a50;
+  --copper-hi: #ffbe8a;
+  --gold: #d9b467;
+  --silk: #eef3ea;
+
+  /* Type */
+  --sans: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --wdth-display: 68%;
+  --wdth-heading: 75%;
+  --wdth-ui: 88%;
+  --t-label: 11px;  /* mono, uppercase, +0.06em: table heads, field labels, meta keys */
+  --t-mono: 13px;   /* mono data, refdes, timestamps, code */
+  --t-sm: 14px;     /* dense UI: tables, inputs, buttons in tools */
+  --t-base: 16px;   /* tool body */
+  --t-body: 17px;   /* reading body on content pages */
+  --t-lead: 20px;
+  --t-h3: 26px;
+  --t-h2: clamp(32px, 4.5vw, 52px);
+  --t-h1: clamp(48px, 7.4vw, 104px);
+
+  /* Space (4px grid) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+
+  /* Shape */
+  --r-1: 3px;   /* tags, refdes, badges, kbd */
+  --r-2: 6px;   /* buttons, inputs, toasts, small panels */
+  --r-3: 12px;  /* cards, panels, images */
+  --r-board: 18px;
+  --border: 1px solid var(--line);
+  --border-strong: 1px solid var(--line-2);
+  --shadow-pop: 0 12px 32px -12px rgb(0 0 0 / 0.45); /* only for floating things: toasts, menus */
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-1: 150ms; /* hover, colour */
+  --dur-2: 250ms; /* switches, toasts */
+  --dur-3: 600ms; /* reveals, board routing */
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #e9efeb;
+  --bg-2: #f6f9f7;
+  --bg-3: #dbe5df;
+  --fg: #0e211a;
+  --fg-2: #3c5147;
+  --fg-3: #556a60;
+  --line: #ccd8d1;
+  --line-2: #b2c3b9;
+  --accent: #b14e1a;
+  --accent-hi: #8f3b10;
+  --accent-ink: #fff6ee;
+  --ok: #1b7a47;
+  --warn: #8a6300;
+  --bad: #b3243f;
+  --info: #1f5fbf;
+  --shadow-pop: 0 12px 32px -14px rgb(14 33 26 / 0.3);
+  color-scheme: light;
+}
