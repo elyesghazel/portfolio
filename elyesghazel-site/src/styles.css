@@ -1,44 +1,69 @@
+/* Colours, type, spacing and fonts come from the shared design tokens, so this
+   site, the ops dashboard and the lab hub stay one family. See ../../DESIGN.md. */
+@import "../../design/tokens.css";
 @import "tailwindcss";
 
-@theme {
-  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas,
-    "DejaVu Sans Mono", "Liberation Mono", monospace;
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-  /* Black and white. Nothing else. Greys are contrast-checked against #000. */
-  --color-ink: #ffffff;
-  --color-body: #dcdcdc;
-  --color-dim: #a6a6a6;
-  --color-faint: #8a8a8a;
-  --color-rule: #232323;
-  --color-paper: #000000;
+@theme inline {
+  --font-mono: var(--font-mono);
 
-  /* SlidePlate's brand red. Used for that link only. */
-  --color-accent: #c47070;
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-paper: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-hover: var(--bg-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
 
   /* Stealthy project only: keyword highlights. Green = software/attacks,
      amber = hardware/electronics. Terminal palette for the hacker badge. */
-  --color-key: #7fd39b;
-  --color-hw: #d8b46a;
+  --color-key: var(--key);
+  --color-hw: var(--hw);
+}
+
+:root {
+  --key: #7fd39b;
+  --hw: #d8b46a;
+}
+[data-theme="light"] {
+  --key: #1e7a44;
+  --hw: #8f5f00;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --key: #1e7a44;
+    --hw: #8f5f00;
+  }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    background: var(--bg);
   }
 
+  /* The background sits on <html> only: a body background would paint over
+     the starfield canvas, which lives at z-index -10. */
   body {
-    background: var(--color-paper);
-    color: var(--color-body);
+    color: var(--body);
     font-family: var(--font-mono);
-    font-size: 15.5px;
-    line-height: 1.72;
+    font-size: var(--fs-base);
+    line-height: var(--lh-body);
+    font-feature-settings: "calt" 0; /* no ligatures in prose: -> stays two characters */
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition: color var(--dur-2) ease;
   }
 
   ::selection {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--ink);
+    color: var(--bg);
   }
 
   a {
@@ -47,13 +72,13 @@
   }
 
   :focus-visible {
-    outline: 1px solid var(--color-ink);
-    outline-offset: 3px;
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-faint) transparent;
+    scrollbar-color: var(--rule-strong) transparent;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -70,32 +95,666 @@
 }
 
 @layer components {
-  /* Underline that draws itself on hover - the only flourish on the page. */
+  /* Underline that draws itself on hover. */
   .link {
-    color: var(--color-ink);
+    color: var(--ink);
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
     background-position: 0 100%;
     background-size: 0% 1px;
-    transition: background-size 180ms ease;
+    transition: background-size var(--dur-2) var(--ease);
   }
-
   .link:hover,
   .link:focus-visible {
     background-size: 100% 1px;
   }
 
+  /* Links inside prose: the accent, always underlined. */
   .link-accent {
-    color: var(--color-accent);
+    color: var(--accent);
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
     background-position: 0 100%;
     background-size: 100% 1px;
-    transition: opacity 180ms ease;
+    transition: color var(--dur-1) ease;
   }
-
   .link-accent:hover,
   .link-accent:focus-visible {
-    opacity: 0.75;
+    color: var(--accent-hover);
+  }
+
+  /* An arrow that nudges in the direction it points when its parent is hovered. */
+  .arr {
+    display: inline-block;
+    transition: transform var(--dur-2) var(--ease);
+  }
+  .group:hover .arr-r,
+  a:hover > .arr-r,
+  a:focus-visible > .arr-r {
+    transform: translateX(3px);
+  }
+  .group:hover .arr-ne,
+  a:hover > .arr-ne {
+    transform: translate(2px, -2px);
+  }
+  .group:hover .arr-d,
+  a:hover > .arr-d {
+    transform: translateY(2px);
+  }
+
+  /* `// label ----------` */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    color: var(--ink);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .section-label::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: var(--rule);
+  }
+  .section-label .slashes {
+    color: var(--faint);
+    letter-spacing: 0.1em;
+  }
+  .section-label .aside {
+    order: 3;
+    color: var(--faint);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    height: 38px;
+    padding: 0 var(--sp-4);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-1);
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      border-color var(--dur-1) ease,
+      background-color var(--dur-1) ease,
+      color var(--dur-1) ease;
+  }
+  .btn:hover {
+    border-color: var(--ink);
+    background: var(--bg-hover);
+  }
+  .btn-primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .btn-primary:hover {
+    background: var(--body);
+    border-color: var(--body);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 var(--sp-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-1);
+    color: var(--dim);
+    font-size: var(--fs-xs);
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      border-color var(--dur-1) ease,
+      color var(--dur-1) ease;
+  }
+  .tag:hover {
+    border-color: var(--rule-strong);
+    color: var(--ink);
+  }
+
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-2);
+    background: color-mix(in srgb, var(--bg-raised) 85%, transparent);
+    transition: border-color var(--dur-1) ease;
+  }
+  a.card:hover,
+  .card.is-link:hover {
+    border-color: var(--rule-strong);
+  }
+
+  kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 1px 5px;
+    border: 1px solid var(--rule-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--radius-1);
+    color: var(--dim);
+    font-family: inherit;
+    font-size: var(--fs-2xs);
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* Fade-up on first view. Only when JS is on, so no-JS still shows content. */
+  .js .rv {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity var(--dur-3) var(--ease),
+      transform var(--dur-3) var(--ease);
+  }
+  .js .rv.in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    max-width: calc(100vw - 32px);
+    padding: 10px 14px;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-2);
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-pop);
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    transform: translate(-50%, 12px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity var(--dur-2) ease,
+      transform var(--dur-2) var(--ease);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .toast .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+}
+
+/* ------------------------------------------------------------- the log */
+
+/*
+ * Grid: year | rail | entry. The rail is one hairline; a second line on top
+ * of it fills as you scroll, and each node fills when the line reaches it.
+ */
+.log {
+  position: relative;
+  --year-w: 4.5rem;
+  --rail-x: calc(var(--year-w) + 12px);
+}
+.log-rail,
+.log-fill {
+  position: absolute;
+  left: var(--rail-x);
+  top: 10px;
+  width: 1px;
+}
+.log-rail {
+  bottom: 10px;
+  background: var(--rule);
+}
+.log-fill {
+  height: 0;
+  background: var(--ink);
+  opacity: 0.55;
+}
+.log-year {
+  display: grid;
+  grid-template-columns: var(--year-w) 1fr;
+  gap: 0 25px;
+}
+.log-year + .log-year {
+  margin-top: var(--sp-8);
+}
+.log-year > h3 {
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 640px) {
+  .log-year > h3 {
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+    align-self: start;
+  }
+}
+.log-entry {
+  position: relative;
+  padding-bottom: var(--sp-6);
+}
+.log-entry:last-child {
+  padding-bottom: 0;
+}
+.log-node {
+  position: absolute;
+  top: 7px;
+  left: -17px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--bg);
+  transition:
+    background-color var(--dur-2) ease,
+    border-color var(--dur-2) ease,
+    box-shadow var(--dur-2) ease;
+}
+.log-entry.on .log-node {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+.log-entry.now .log-node {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.log-month {
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 639px) {
+  .log {
+    --year-w: 2.75rem;
+    --rail-x: calc(var(--year-w) + 10px);
+  }
+  .log-year {
+    column-gap: 21px;
+  }
+  .log-node {
+    left: -15px;
+  }
+}
+
+/* ------------------------------------------------------------ markdown */
+
+/* Posts and project write-ups. Blocks get vertical rhythm from .md > * + *. */
+.md > * + * {
+  margin-top: var(--sp-5);
+}
+.md-flow > * + * {
+  margin-top: var(--sp-5);
+}
+.md .md-h2 {
+  padding-top: var(--sp-8);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+.md-flow > .md-h2:first-child {
+  padding-top: var(--sp-4);
+}
+.md .md-h3 {
+  padding-top: var(--sp-3);
+  color: var(--ink);
+  font-size: var(--fs-md);
+}
+.md strong {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+}
+.md-hl strong {
+  color: var(--key);
+  font-weight: inherit;
+}
+.md em {
+  color: var(--ink);
+}
+.md-flow ul,
+.md-flow ol {
+  display: grid;
+  gap: var(--sp-2);
+}
+.md-flow ul > li {
+  position: relative;
+  padding-left: 1.4em;
+}
+.md-flow ul > li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--faint);
+}
+.md-hl .md-flow ul > li::before {
+  color: var(--key);
+}
+.md-flow ol {
+  counter-reset: md;
+}
+.md-flow ol > li {
+  position: relative;
+  padding-left: 2em;
+  counter-increment: md;
+}
+.md-flow ol > li::before {
+  content: counter(md, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.md :not(pre) > code {
+  padding: 1px 5px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-1);
+  background: var(--bg-sunken);
+  color: var(--ink);
+  font-size: 0.9em;
+}
+.md hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: var(--sp-10) 0;
+}
+.md blockquote {
+  padding-left: var(--sp-4);
+  border-left: 1px solid var(--rule-strong);
+  color: var(--dim);
+}
+.md-img img {
+  width: 100%;
+  border: 1px solid var(--rule);
+}
+.md-caption {
+  margin-top: var(--sp-3);
+  color: var(--faint);
+  font-size: var(--fs-sm);
+}
+.md-table {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-2);
+}
+.md-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.md-table th {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--faint);
+  font-size: var(--fs-2xs);
+  font-weight: inherit;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.md-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.md-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* the block tools sit a little further from the text around them */
+.md > .md-tool,
+.md > .md-callout {
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-3);
+}
+.md-tool-title {
+  margin-bottom: var(--sp-5);
+  color: var(--faint);
+  font-size: var(--fs-sm);
+}
+
+/* bars */
+.md-bars {
+  padding: var(--sp-6);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--bg-raised) 85%, transparent);
+}
+.md-bars ul {
+  display: grid;
+  gap: var(--sp-5);
+}
+.md-bars li {
+  display: grid;
+  grid-template-columns: minmax(7rem, 11rem) 1fr auto;
+  align-items: center;
+  gap: var(--sp-5);
+}
+.md-bars-label {
+  display: grid;
+  line-height: 1.35;
+}
+.md-bars-sub {
+  color: var(--faint);
+  font-size: var(--fs-xs);
+}
+.md-bars-track {
+  height: 10px;
+  background: var(--rule);
+}
+.md-bars-track i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  opacity: 0.9;
+  transition: width 900ms var(--ease);
+}
+.md-bars li.hot .md-bars-track i {
+  background: var(--accent);
+  opacity: 1;
+}
+.md-bars-value {
+  display: grid;
+  justify-items: end;
+  line-height: 1.35;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.md-bars li.hot .md-bars-value > span:first-child {
+  color: var(--accent);
+}
+@media (max-width: 560px) {
+  .md-bars {
+    padding: var(--sp-5) var(--sp-4);
+  }
+  .md-bars li {
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-2) var(--sp-4);
+  }
+  .md-bars-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* stats */
+.md-stats {
+  display: grid;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.md-stats > div {
+  padding: var(--sp-4) var(--sp-4);
+  border-left: 1px solid var(--rule);
+}
+.md-stats > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.md-stats dd {
+  color: var(--ink);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.md-stats dt {
+  margin-top: var(--sp-2);
+  color: var(--faint);
+  font-size: var(--fs-xs);
+  line-height: 1.35;
+}
+@media (max-width: 560px) {
+  .md-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .md-stats > div:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .md-stats > div:nth-child(n + 3) {
+    border-top: 1px solid var(--rule);
+  }
+}
+
+/* code and terminal */
+.md-code {
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-2);
+  background: var(--bg-sunken);
+}
+.md-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 6px 8px 6px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--faint);
+  font-size: var(--fs-xs);
+}
+.md-code pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  color: var(--body);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+.md-term .cmd {
+  color: var(--ink);
+}
+.md-term .prompt {
+  color: var(--accent);
+  user-select: none;
+}
+.md-term .out {
+  color: var(--dim);
+}
+.md-term .cmt {
+  color: var(--faint);
+}
+.md-copy {
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-1);
+  color: var(--dim);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  transition:
+    color var(--dur-1) ease,
+    border-color var(--dur-1) ease;
+}
+.md-copy:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+/* callouts */
+.md-callout {
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-5);
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--info);
+  border-radius: var(--radius-1);
+  background: color-mix(in srgb, var(--bg-raised) 85%, transparent);
+}
+.md-callout.tip {
+  border-left-color: var(--ok);
+}
+.md-callout.warn {
+  border-left-color: var(--warn);
+}
+.md-callout.bad {
+  border-left-color: var(--bad);
+}
+.md-callout-kind {
+  color: var(--info);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+.md-callout.tip .md-callout-kind {
+  color: var(--ok);
+}
+.md-callout.warn .md-callout-kind {
+  color: var(--warn);
+}
+.md-callout.bad .md-callout-kind {
+  color: var(--bad);
+}
+.md-callout .md-flow {
+  color: var(--body);
+}
+
+/* diagrams */
+.md-flow-fig {
+  padding: var(--sp-6) var(--sp-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--bg-raised) 85%, transparent);
+}
+.md-flow-svg {
+  display: flex;
+  justify-content: center;
+  min-height: 120px;
+  overflow-x: auto;
+}
+.md-flow-svg svg {
+  max-width: 100%;
+  height: auto;
+}
+.md-flow-fig .md-caption {
+  margin-top: var(--sp-4);
+  text-align: center;
+}
+.md-flow-fallback {
+  overflow-x: auto;
+  color: var(--dim);
+  font-size: var(--fs-sm);
+}
+.md-flow-svg svg * {
+  filter: none !important; /* mermaid's default node shadows */
+}
+@media (max-width: 560px) {
+  /* keep diagram text readable on a phone: scroll sideways instead of shrinking */
+  .md-flow-svg {
+    justify-content: flex-start;
+  }
+  .md-flow-svg svg {
+    min-width: 480px;
   }
 }

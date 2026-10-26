@@ -1,13 +1,13 @@
 # elyesghazel.ch
 
-Personal site for Elyes Ghazel. Text only, monochrome, monospace, nothing on it
-that isn't earning its place.
+Personal site for Elyes Ghazel. Black, starfield, monospace, one accent colour,
+nothing on it that isn't earning its place. The look is written down in
+[`DESIGN.md`](DESIGN.md) and shared with the other sites through `design/`.
 
 ## Stack
 
-React 19 · Vite 7 · Tailwind 4 · TypeScript. No UI kit, no icon library, no
-webfonts, no images - the page uses the system monospace stack, so there is
-nothing to download before text renders. Routing is ~40 lines of history API in
+React 19 · Vite 7 · Tailwind 4 · TypeScript. No UI kit, no icon library. One
+font, JetBrains Mono, self-hosted from `design/fonts/` via `design/tokens.css`. Routing is ~40 lines of history API in
 `src/router.tsx`; three routes did not justify a dependency.
 
 Built output: ~64 kB JS gzipped, 4 kB CSS, zero image weight.
@@ -18,11 +18,16 @@ Built output: ~64 kB JS gzipped, 4 kB CSS, zero image weight.
 /                            home
 /projects/slideplate         SlidePlate write-up
 /projects/tsw25-fahrstand    TSW25 Fahrstand write-up
+/blog                        all posts
+/blog/<slug>                 one post
 ```
 
-Project pages are driven by the `projects` array in `content.ts`. Adding one
-means adding an entry there and setting `slug` on the matching `work` item; the
-"read more" link appears on its own. Add the URL to `public/sitemap.xml` too.
+Project pages and blog posts are markdown files in
+`elyesghazel-site/src/markdown/` (`projects/<slug>.md`, `posts/<slug>.md`). A
+new file is a new page; posts also appear on `/blog`, on the home page and in
+the log. Block tools for posts (flow diagrams, bar charts, stats, galleries,
+terminal transcripts, callouts) are documented in `src/markdown/README.md`.
+For a project, also set `slug` on the matching `work` item in `content.ts`. Add the URL to `public/sitemap.xml` too. Same for blog posts.
 
 ## Editing content
 
@@ -43,8 +48,12 @@ elyesghazel-site/
     ├── content.ts        ← every string on the site
     ├── App.tsx           routing + home page
     ├── router.tsx        history API, ~40 lines
-    ├── styles.css        Tailwind theme; the greyscale palette lives here
-    └── components/       Header, Footer, Section, ProjectView
+    ├── styles.css        Tailwind theme mapped onto design/tokens.css
+    ├── lib/              theme toggle, toast, scroll reveal
+    └── components/       Header, Hero bits, Log (timeline), ProjectView
+
+design/                   tokens.css, components.css, kit.html, fonts/
+elyesghazel-site/scripts/build-lab.sh   preview build under a subpath (lab hub)
 ```
 
 ## Local development
