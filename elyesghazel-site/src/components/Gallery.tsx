@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ProjectImage } from "../content";
+import { asset } from "../router";
 
 /**
  * A colour photo gallery. Click any image to expand it into a full-screen
@@ -53,7 +54,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
                 className="group block w-full cursor-zoom-in overflow-hidden border border-rule"
               >
                 <img
-                  src={image.src}
+                  src={asset(image.src)}
                   alt={image.alt}
                   loading="lazy"
                   decoding="async"
@@ -113,7 +114,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           )}
 
           <img
-            src={images[active].src}
+            src={asset(images[active].src)}
             alt={images[active].alt}
             onClick={(e) => e.stopPropagation()}
             className="max-h-[82vh] max-w-[92vw] object-contain"
