@@ -3,7 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // Apply a saved theme before first paint so there is no flash.
+      // Without one, the OS preference decides (handled in CSS).
+      (function () {
+        var root = document.documentElement, t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t === "light" || t === "dark") root.dataset.theme = t;
+        root.className += " js";
+      })();
+    </script>
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
 
     <title>Elyes Ghazel - Software Engineer</title>
     <meta
@@ -29,7 +40,8 @@
       content="Backends, web apps, custom hardware, and the servers underneath. Founder of SlidePlate."
     />
 
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
   </head>
   <body>
     <div id="root"></div>

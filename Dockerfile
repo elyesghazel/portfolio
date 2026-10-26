@@ -9,6 +9,8 @@ WORKDIR /app
 COPY elyesghazel-site/package.json elyesghazel-site/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+# Shared design tokens and fonts, imported by src/styles.css as ../../design
+COPY design/ /design/
 COPY elyesghazel-site/ ./
 RUN pnpm build
 

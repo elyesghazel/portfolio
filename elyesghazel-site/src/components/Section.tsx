@@ -3,17 +3,21 @@ import type { ReactNode } from "react";
 type Props = {
   id: string;
   label: string;
+  /** Small text at the right end of the rule. */
+  aside?: string;
   children: ReactNode;
 };
 
-/** A lowercase label, a hairline to the right of it, then the content. */
-export default function Section({ id, label, children }: Props) {
+/** `// LABEL ----------- aside`, then the content. */
+export default function Section({ id, label, aside, children }: Props) {
   return (
-    <section id={id} className="scroll-mt-20 pt-16 md:pt-24">
-      <h2 className="flex items-center gap-4 text-ink text-sm tracking-[0.2em] uppercase">
-        <span className="text-faint">//</span>
+    <section id={id} className="rv pt-20 md:pt-28">
+      <h2 className="section-label">
+        <span className="slashes" aria-hidden>
+          //
+        </span>
         {label}
-        <span aria-hidden className="h-px flex-1 bg-rule" />
+        {aside && <span className="aside">{aside}</span>}
       </h2>
       <div className="mt-8">{children}</div>
     </section>

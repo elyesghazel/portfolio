@@ -70,6 +70,20 @@ export default function Starfield() {
     let last = performance.now();
     let nextShooter = last + 2500 + Math.random() * 3000;
 
+    // Star colour follows the theme: white dots on black, graphite on light.
+    let ink: Rgb = WHITE;
+    let inkAlpha = 1;
+    let light = false;
+    function readTheme() {
+      const css = getComputedStyle(document.documentElement);
+      const rgb = css.getPropertyValue("--star").split(",").map((v) => Number(v.trim()));
+      ink = rgb.length === 3 && rgb.every((v) => !Number.isNaN(v)) ? (rgb as Rgb) : WHITE;
+      inkAlpha = Number(css.getPropertyValue("--star-alpha")) || 1;
+      light = ink[0] < 128;
+    }
+    readTheme();
+    const scheme = window.matchMedia("(prefers-color-scheme: light)");
+
     const target = { x: 0, y: 0 };
     const cur = { x: 0, y: 0 };
     const scroll = { target: 0, cur: 0 };
@@ -100,8 +114,9 @@ export default function Starfield() {
     }
 
     function drawStar(s: Star, alpha: number, px: number, py: number) {
-      ctx!.globalAlpha = alpha;
-      ctx!.fillStyle = `rgb(${s.tint[0]},${s.tint[1]},${s.tint[2]})`;
+      const c = light ? ink : s.tint;
+      ctx!.globalAlpha = alpha * inkAlpha;
+      ctx!.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
       ctx!.beginPath();
       ctx!.arc(px, py, s.r, 0, Math.PI * 2);
       ctx!.fill();
@@ -176,8 +191,9 @@ export default function Starfield() {
         const tailX = sh.x - (sh.vx / mag) * sh.len;
         const tailY = sh.y - (sh.vy / mag) * sh.len;
         const grad = ctx!.createLinearGradient(sh.x, sh.y, tailX, tailY);
-        grad.addColorStop(0, `rgba(255,255,255,${0.9 * fade})`);
-        grad.addColorStop(1, "rgba(255,255,255,0)");
+        const sc = `${ink[0]},${ink[1]},${ink[2]}`;
+        grad.addColorStop(0, `rgba(${sc},${0.9 * fade * inkAlpha})`);
+        grad.addColorStop(1, `rgba(${sc},0)`);
         ctx!.strokeStyle = grad;
         ctx!.lineWidth = 1.6;
         ctx!.lineCap = "round";
@@ -186,7 +202,7 @@ export default function Starfield() {
         ctx!.lineTo(tailX, tailY);
         ctx!.stroke();
         ctx!.globalAlpha = fade;
-        ctx!.fillStyle = "rgba(255,255,255,0.95)";
+        ctx!.fillStyle = `rgba(${sc},${0.95 * inkAlpha})`;
         ctx!.beginPath();
         ctx!.arc(sh.x, sh.y, 1.5, 0, Math.PI * 2);
         ctx!.fill();
@@ -218,6 +234,8 @@ export default function Starfield() {
     onScroll();
     raf = requestAnimationFrame(frame);
     window.addEventListener("resize", resize);
+    window.addEventListener("themechange", readTheme);
+    scheme.addEventListener("change", readTheme);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("scroll", onScroll, { passive: true });
     if (canHover) window.addEventListener("pointermove", onPointer, { passive: true });
@@ -225,6 +243,8 @@ export default function Starfield() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("themechange", readTheme);
+      scheme.removeEventListener("change", readTheme);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
