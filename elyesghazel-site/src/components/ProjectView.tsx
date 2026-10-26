@@ -1,103 +1,103 @@
-import type { ProjectPage } from "../content";
+import { projects, type ProjectPage } from "../markdown/load";
+import Markdown from "../md/Markdown";
 import Header from "./Header";
 import Footer from "./Footer";
-import Gallery from "./Gallery";
-import Prose from "./Prose";
 import Link from "../router";
 
 export default function ProjectView({ project }: { project: ProjectPage }) {
+  const index = projects.indexOf(project);
+  const next = projects[(index + 1) % projects.length];
+
   return (
-    <div className="min-h-screen">
+    <div id="top" className="min-h-screen">
       <Header variant="project" />
 
-      <main className="mx-auto max-w-2xl px-6 pb-4">
-        <article className="pt-16 md:pt-24">
-          <p className="text-sm text-faint">// project</p>
+      <main className="mx-auto max-w-[var(--measure)] px-6 pb-4">
+        <article className="pt-12 md:pt-20">
+          <Link to="/#work" className="group text-sm text-dim transition-colors hover:text-ink">
+            <span aria-hidden className="arr inline-block transition-transform group-hover:-translate-x-0.5">
+              &larr;
+            </span>{" "}
+            all work
+          </Link>
 
-          <h1 className="mt-4 text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
+          <p className="section-label mt-10">
+            <span className="slashes" aria-hidden>
+              //
+            </span>
+            project
+          </p>
+
+          <h1 className="mt-6 text-[length:var(--fs-2xl)] leading-[var(--lh-tight)] tracking-tight text-ink sm:text-[length:var(--fs-3xl)]">
             {project.title}
           </h1>
 
-          <p className="mt-2 text-dim">
-            {project.role} · {project.period}
+          <p className="mt-6 max-w-[34rem] text-[length:var(--fs-md)] leading-relaxed">
+            {project.summary}
           </p>
 
-          <p className="mt-6 max-w-lg">{project.summary}</p>
-
-          <p className="mt-6 border-y border-rule py-3 text-sm text-faint">
-            {project.tags.join("  ·  ")}
-          </p>
-
-          {project.link && (
-            <p className="mt-6">
-              <a
-                href={project.link.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="link"
-              >
-                {project.link.label}
-                <span aria-hidden className="ml-1 text-dim">
-                  ↗
-                </span>
-              </a>
-            </p>
-          )}
-
-          {project.images && project.images.length > 0 && (
-            <Gallery images={project.images} />
-          )}
-
-          <div className="mt-12 space-y-5">
-            {project.blocks.map((block, index) => {
-              if (block.type === "h") {
-                return (
-                  <h2
-                    key={index}
-                    className="pt-6 text-sm uppercase tracking-[0.2em] text-ink"
+          <dl className="mt-10 grid grid-cols-2 border-y border-rule sm:grid-cols-3">
+            <Meta label="role" value={project.role} />
+            <Meta label="when" value={project.period} border />
+            {project.link && (
+              <div className="col-span-2 border-t border-rule py-4 sm:col-span-1 sm:border-t-0 sm:border-l sm:px-5">
+                <dt className="text-xs text-faint">link</dt>
+                <dd className="mt-1 truncate text-sm">
+                  <a
+                    href={project.link.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="link"
                   >
-                    <span aria-hidden className="text-key">
-                      //{" "}
-                    </span>
-                    {block.text}
-                  </h2>
-                );
-              }
+                    {project.link.label.replace(/^github\.com\/elyesghazel\//, "")}
+                  </a>{" "}
+                  <span aria-hidden className="text-faint">
+                    ↗
+                  </span>
+                </dd>
+              </div>
+            )}
+          </dl>
 
-              if (block.type === "ul") {
-                return (
-                  <ul key={index} className="space-y-1.5">
-                    {block.items.map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span aria-hidden className="text-key">
-                          -
-                        </span>
-                        <span>
-                          <Prose text={item} />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                );
-              }
+          <ul className="mt-6 flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <li key={tag} className="tag">
+                {tag}
+              </li>
+            ))}
+          </ul>
 
-              return (
-                <p key={index}>
-                  <Prose text={block.text} />
-                </p>
-              );
-            })}
+          <div className="mt-14">
+            <Markdown source={project.body} highlight={project.highlight} />
           </div>
         </article>
 
-        <p className="mt-16">
-          <Link to="/" className="link">
-            <span aria-hidden>&larr;</span> back to everything else
+        <nav className="mt-20 grid gap-3 sm:grid-cols-2" aria-label="More">
+          <Link to="/#work" className="card group block p-5">
+            <span className="text-xs text-faint">back</span>
+            <span className="mt-1 block text-ink">
+              <span aria-hidden className="arr">&larr;</span> everything else
+            </span>
           </Link>
-        </p>
+          <Link to={`/projects/${next.slug}`} className="card group block p-5 sm:text-right">
+            <span className="text-xs text-faint">next project</span>
+            <span className="mt-1 block text-ink">
+              {next.title} <span aria-hidden className="arr arr-r">&rarr;</span>
+            </span>
+          </Link>
+        </nav>
 
         <Footer />
       </main>
+    </div>
+  );
+}
+
+function Meta({ label, value, border }: { label: string; value: string; border?: boolean }) {
+  return (
+    <div className={`py-4 ${border ? "border-l border-rule pl-4 sm:px-5" : "pr-4"}`}>
+      <dt className="text-xs text-faint">{label}</dt>
+      <dd className="mt-1 text-sm text-ink">{value}</dd>
     </div>
   );
 }
