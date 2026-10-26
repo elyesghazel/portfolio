@@ -8,7 +8,7 @@ import Hero from "./home/Hero";
 import WorkLog from "./home/WorkLog";
 import Contact from "./home/Contact";
 import Link, { usePath } from "./router";
-import { about, projects, pull, site, stack } from "./content";
+import { about, hero, projects, pull, site, stack } from "./content";
 
 export default function App() {
   const path = usePath();
@@ -46,6 +46,7 @@ function useReveal() {
 
 function Home() {
   useReveal();
+  const [pullHead, pullTail] = pull.split(/(?<=thing )/);
 
   return (
     <>
@@ -55,12 +56,30 @@ function Home() {
         <div className="wrap">
           <Hero />
 
-          <Head id="work" label="work" aside="git log --graph" />
+          <Head id="work" refdes="J1-4" label="Work" aside="Four parts, newest first. The pads on the board above link here." />
           <WorkLog />
 
-          <Head id="about" label="about" />
+          <Head id="about" refdes="R1" label="About" />
           <div className="about">
-            <p className="pull rv">{pull}</p>
+            <div className="rv">
+              <p className="pull">
+                {pullHead}
+                <em>{pullTail}</em>
+              </p>
+              <table className="spec ratings">
+                <caption>Ratings</caption>
+                <tbody>
+                  {hero.proof.map((p) => (
+                    <tr key={p.value}>
+                      <td className="v">{p.value}</td>
+                      <td>
+                        <a href={p.href}>{p.text}</a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <div className="body rv">
               {about.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>
@@ -70,23 +89,39 @@ function Home() {
             </div>
           </div>
 
-          <Head id="stack" label="stack" />
-          <dl className="stack rv">
-            {stack.map((group) => (
-              <div key={group.group}>
-                <dt>{group.group}</dt>
-                <dd>
-                  {group.items.map((item) => (
-                    <span key={item} className="pill">
-                      {item}
-                    </span>
-                  ))}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <Head id="stack" refdes="BOM" label="Stack" aside="Bill of materials: what the things above are made of." />
+          <table className="bom rv">
+            <thead>
+              <tr>
+                <th scope="col">Ref</th>
+                <th scope="col">Group</th>
+                <th scope="col">Parts</th>
+                <th scope="col" className="q">Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stack.map((group, i) => (
+                <tr key={group.group}>
+                  <td className="r">L{i + 1}</td>
+                  <th scope="row" className="g">
+                    {group.group[0].toUpperCase() + group.group.slice(1)}
+                  </th>
+                  <td className="items-cell">
+                    <div className="items">
+                      {group.items.map((item) => (
+                        <span key={item} className="tag">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="q">{group.items.length}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-          <Head id="contact" label="contact" />
+          <Head id="contact" refdes="J0" label="Contact" />
           <Contact />
         </div>
       </main>
@@ -101,11 +136,11 @@ function NotFound() {
     <>
       <Header variant="project" />
       <main className="wrap">
-        <div className="max-w-3xl pt-24">
-          <p className="text-faint">404</p>
-          <h1 className="mt-4 text-2xl text-ink">No such project.</h1>
-          <p className="mt-6">
-            <Link to="/" className="link">
+        <div className="proj max-w-3xl pt-24">
+          <span className="ref cu">404 · no connect</span>
+          <h1>No such project.</h1>
+          <p className="mt-8">
+            <Link to="/" className="btn">
               <span aria-hidden>&larr;</span> back to everything else
             </Link>
           </p>

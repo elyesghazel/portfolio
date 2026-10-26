@@ -8,6 +8,7 @@ export default function Footer() {
           © {new Date().getFullYear()} {site.name}
         </span>
         <span>{site.location}</span>
+        <span>rev 2026.10</span>
         <a href="#top">back to top ↑</a>
       </div>
     </footer>

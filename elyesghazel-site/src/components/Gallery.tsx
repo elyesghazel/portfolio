@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ProjectImage } from "../content";
+import { withBase } from "../router";
 
 /**
  * A colour photo gallery. Click any image to expand it into a full-screen
@@ -50,10 +51,10 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
                 type="button"
                 onClick={() => setActive(i)}
                 aria-label={`Expand image: ${image.alt}`}
-                className="group block w-full cursor-zoom-in overflow-hidden border border-rule"
+                className="group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-rule"
               >
                 <img
-                  src={image.src}
+                  src={withBase(image.src)}
                   alt={image.alt}
                   loading="lazy"
                   decoding="async"
@@ -62,7 +63,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
                 />
               </button>
               {image.caption && (
-                <figcaption className="mt-3 text-sm text-faint">{image.caption}</figcaption>
+                <figcaption className="mt-3 font-mono text-[12.5px] leading-relaxed text-faint">{image.caption}</figcaption>
               )}
             </figure>
           ),
@@ -75,7 +76,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           aria-modal="true"
           aria-label={images[active].alt}
           onClick={() => setActive(null)}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-paper/95 p-4 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-paper/97 p-4 sm:p-8"
         >
           <button
             type="button"
@@ -113,7 +114,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           )}
 
           <img
-            src={images[active].src}
+            src={withBase(images[active].src)}
             alt={images[active].alt}
             onClick={(e) => e.stopPropagation()}
             className="max-h-[82vh] max-w-[92vw] object-contain"

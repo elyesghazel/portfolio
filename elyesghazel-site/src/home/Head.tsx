@@ -1,13 +1,22 @@
-/** `//////////` in blue, an uppercase label, a hairline, optional aside. */
-export default function Head({ id, label, aside }: { id: string; label: string; aside?: string }) {
+/** Section heading: refdes tag, condensed title, a rule that ends in a via. */
+export default function Head({
+  id,
+  refdes,
+  label,
+  aside,
+}: {
+  id: string;
+  refdes: string;
+  label: string;
+  aside?: string;
+}) {
   return (
-    <h2 className="head" id={id}>
-      <span className="slashes" aria-hidden>
-        //////////
-      </span>
-      {label}
-      <span className="rule" aria-hidden />
-      {aside && <span className="aside">{aside}</span>}
-    </h2>
+    <header className="sec" id={id}>
+      <h2>
+        <span className="ref cu">{refdes}</span>
+        {label}
+      </h2>
+      {aside && <p>{aside}</p>}
+    </header>
   );
 }

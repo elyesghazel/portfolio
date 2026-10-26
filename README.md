@@ -1,16 +1,17 @@
 # elyesghazel.ch
 
-Personal site for Elyes Ghazel. Text only, monochrome, monospace, nothing on it
-that isn't earning its place.
+Personal site for Elyes Ghazel, drawn like a circuit board: solder-mask green,
+one copper accent, silkscreen labels. The identity is written down in
+`DESIGN.md`, with plain-CSS tokens, fonts and components in `design/`.
 
 ## Stack
 
-React 19 · Vite 7 · Tailwind 4 · TypeScript. No UI kit, no icon library, no
-webfonts, no images - the page uses the system monospace stack, so there is
-nothing to download before text renders. Routing is ~40 lines of history API in
+React 19 · Vite 7 · Tailwind 4 · TypeScript. No UI kit, no icon library. Two
+self-hosted fonts from `@fontsource`: Archivo (variable, with a width axis) for
+everything, IBM Plex Mono for labels and data. No external requests. Routing is ~40 lines of history API in
 `src/router.tsx`; three routes did not justify a dependency.
 
-Built output: ~64 kB JS gzipped, 4 kB CSS, zero image weight.
+Built output: ~73 kB JS gzipped, 8 kB CSS, ~105 kB of fonts for latin pages.
 
 ## Routes
 

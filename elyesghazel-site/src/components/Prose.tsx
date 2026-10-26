@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 /**
  * Inline keyword highlighting for project prose.
- *   **term**  -> green  (software, attacks, firmware)
- *   ++term++  -> amber  (hardware, electronics)
+ *   **term**  -> strong ink (software, attacks, firmware)
+ *   ++term++  -> copper     (hardware, electronics)
  * Everything else renders as plain text.
  */
 const TOKEN = /\*\*(.+?)\*\*|\+\+(.+?)\+\+/g;
@@ -16,10 +16,10 @@ export default function Prose({ text }: { text: string }) {
     const start = match.index;
     if (start > cursor) nodes.push(text.slice(cursor, start));
 
-    const [, green, amber] = match;
+    const [, sw, hw] = match;
     nodes.push(
-      <span key={start} className={green ? "text-key" : "text-hw"}>
-        {green ?? amber}
+      <span key={start} className={sw ? "hl-sw" : "hl-hw"}>
+        {sw ?? hw}
       </span>,
     );
 

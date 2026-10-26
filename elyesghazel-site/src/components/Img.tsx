@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { withBase } from "../router";
 
 type Props = {
   src: string;
@@ -16,7 +17,7 @@ export default function Img({ src, alt, className }: Props) {
 
   return (
     <img
-      src={src}
+      src={withBase(src)}
       alt={alt}
       loading="lazy"
       decoding="async"

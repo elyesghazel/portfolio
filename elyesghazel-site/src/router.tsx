@@ -2,11 +2,25 @@ import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 
 /** Minimal history-API router. Three routes do not justify a dependency. */
 
+/** Vite's `base` without the trailing slash: "" in production, a prefix on lab previews. */
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+/** Prefix a root-absolute path ("/log/a.webp", "/projects/x") with the base. */
+export function withBase(path: string): string {
+  return path.startsWith("/") ? BASE + path : path;
+}
+
+function currentPath(): string {
+  const path = window.location.pathname;
+  const local = path.startsWith(BASE) ? path.slice(BASE.length) : path;
+  return local.replace(/(.)\/$/, "$1") || "/";
+}
+
 export function usePath(): string {
-  const [path, setPath] = useState(() => window.location.pathname);
+  const [path, setPath] = useState(currentPath);
 
   useEffect(() => {
-    const sync = () => setPath(window.location.pathname);
+    const sync = () => setPath(currentPath());
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
   }, []);
@@ -15,8 +29,8 @@ export function usePath(): string {
 }
 
 export function navigate(to: string) {
-  if (to === window.location.pathname) return;
-  window.history.pushState({}, "", to);
+  if (to === currentPath()) return;
+  window.history.pushState({}, "", withBase(to));
   window.dispatchEvent(new PopStateEvent("popstate"));
   window.scrollTo(0, 0);
 }
@@ -38,7 +52,7 @@ export default function Link({ to, className, children }: LinkProps) {
   }
 
   return (
-    <a href={to} onClick={onClick} className={className}>
+    <a href={withBase(to)} onClick={onClick} className={className}>
       {children}
     </a>
   );

@@ -9,28 +9,39 @@ export default function Contact() {
     if (!navigator.clipboard) return fallback();
     navigator.clipboard
       .writeText(site.email)
-      .then(() => toast(`<b>${site.email}</b><br>Copied. Paste it into any mail app.`), fallback);
+      .then(() => toast(`<b>${site.email}</b>Copied. Paste it into any mail app.`), fallback);
   }
 
   return (
     <>
-      <p className="note rv">{contactNote}</p>
-      <button type="button" className="mail rv" onClick={copy} aria-describedby="copyhint">
-        <span className="u">{user}</span>
-        <span className="at">@</span>
-        <span className="u">{domain}</span>
-      </button>
-      <div className="copyhint" id="copyhint">
-        Click to copy. Or <a href={`mailto:${site.email}`}>open your mail app</a>.
-      </div>
-
-      <div className="contact-rows rv">
-        {links.map((l) => (
-          <a key={l.label} href={l.href} target="_blank" rel="noreferrer noopener">
-            <small>{l.label}</small>
-            <span>{l.value} ↗</span>
-          </a>
-        ))}
+      <div className="contact rv">
+        <div className="main">
+          <p className="note">{contactNote}</p>
+          <button type="button" className="mail" onClick={copy} aria-describedby="copyhint">
+            <span className="u">{user}</span>
+            <span className="at">@</span>
+            <span className="u">{domain}</span>
+          </button>
+          <p className="copyhint" id="copyhint">
+            Click the address to copy it.
+          </p>
+          <div className="actions">
+            <a className="btn primary" href={`mailto:${site.email}`}>
+              Write an email <span className="arr" aria-hidden>→</span>
+            </a>
+            <button type="button" className="btn" onClick={copy}>
+              Copy address
+            </button>
+          </div>
+        </div>
+        <div className="rows">
+          {links.map((l) => (
+            <a key={l.label} href={l.href} target="_blank" rel="noreferrer noopener">
+              <small>{l.label}</small>
+              <span>{l.value} ↗</span>
+            </a>
+          ))}
+        </div>
       </div>
 
       <p className="closing rv">
