@@ -128,6 +128,13 @@ Wordmark on the left: the domain in `--ink` with the TLD in `--faint`; the TLD
 turns `--accent` on hover. Tools prefix their subdomain in `--dim`:
 `<span class="sub">ops.</span>elyesghazel<span class="tld">.ch</span>`.
 
+### Logo
+
+The mark is `eg.`: JetBrains Mono Bold, white on a black square, the period
+in `--accent` like a full stop after the name. It is the favicon and app icon
+of every elyesghazel site. Where there is room, the text wordmark above is the
+logo and the mark stays out of the way. Files and rules: `design/logo/README.md`.
+
 ### Nav
 
 Lowercase words in `--dim`, 20 px apart, right-aligned. Hover goes to `--ink`.
