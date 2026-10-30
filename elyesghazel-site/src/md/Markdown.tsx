@@ -10,7 +10,7 @@ import Term from "./blocks/Term";
 import Code from "./blocks/Code";
 import { rows } from "./parse";
 
-const CALLOUT = /^\s*\[!(note|tip|warn|bad)\]\s*/i;
+const CALLOUT = /^\s*\[!(note|tip|warn|bad|tldr)\]\s*/i;
 
 /**
  * Renders markdown top-level block by block: plain blocks go through marked
@@ -86,7 +86,7 @@ function Block({ token }: { token: Token }): ReactNode {
       const inner = md.lexer(quote.text.replace(CALLOUT, ""));
       return (
         <aside className={`md-callout ${kind}`}>
-          <span className="md-callout-kind">{kind}</span>
+          <span className="md-callout-kind">{kind === "tldr" ? "tl;dr" : kind}</span>
           <Html tokens={inner} />
         </aside>
       );

@@ -716,6 +716,12 @@
 .md-callout.bad .md-callout-kind {
   color: var(--bad);
 }
+.md-callout.tldr {
+  border-left-color: var(--accent);
+}
+.md-callout.tldr .md-callout-kind {
+  color: var(--accent);
+}
 .md-callout .md-flow {
   color: var(--body);
 }

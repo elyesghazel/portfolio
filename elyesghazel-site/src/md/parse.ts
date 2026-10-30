@@ -7,7 +7,7 @@ import { href as withBase } from "../router";
  * Plain GitHub-flavoured markdown, plus:
  *   ++text++          amber hardware highlight (and **bold** turns green on
  *                     pages with `highlight: true` in their frontmatter)
- *   > [!note] ...     callout; also [!tip], [!warn], [!bad]
+ *   > [!note] ...     callout; also [!tip], [!warn], [!bad], [!tldr]
  *   ```flow           diagram (mermaid syntax), themed to the site
  *   ```bars           horizontal bar chart
  *   ```stats          a row of big numbers

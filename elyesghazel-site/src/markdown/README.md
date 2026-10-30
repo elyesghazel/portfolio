@@ -67,6 +67,7 @@ Any other fence is a code block with a copy button; name it with
 `title=file.sh`.
 
 Callouts are blockquotes starting with `[!note]`, `[!tip]`, `[!warn]` or
-`[!bad]`.
+`[!bad]`. Every post opens with a `[!tldr]` callout: two or three
+plain sentences on what was built and why it matters.
 
 Images go in `public/` and are referenced from the root (`/x.jpg`).
