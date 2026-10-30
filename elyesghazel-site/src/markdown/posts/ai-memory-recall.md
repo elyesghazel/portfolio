@@ -26,16 +26,12 @@ So the memory now has two layers: a small curated one that every session reads, 
 
 ```flow caption="from a finished session to the next session's context"
 flowchart TD
-  s[Claude Code sessions] -->|jsonl transcripts| idx[recall --index<br/>cron, every 15 min]
-  idx --> chunk[1000-char chunks<br/>200 overlap]
-  chunk --> emb[local embedding model<br/>CPU, 4 threads]
+  s[finished sessions<br/>jsonl transcripts] -->|cron, every 15 min| emb[chunk + embed<br/>local model, CPU]
   emb --> db[(SQLite index<br/>float32 vectors)]
-  db --> q[recall query<br/>from any session]
-  db --> dream[nightly dream<br/>02:30]
-  dream --> mem[~/ai memory<br/>git repo]
-  mem --> idxmd[MEMORY.md]
-  idxmd -->|loaded at start| s
-  q -->|results via hook| s
+  db -->|recall query| q[background worker]
+  db -->|nightly dream, 02:30| mem[~/ai memory<br/>facts, diary, changelog]
+  q -->|recall-inject hook| next[next session's context]
+  mem -->|MEMORY.md at start| next
 ```
 
 ## Layer one: a curated memory in git
