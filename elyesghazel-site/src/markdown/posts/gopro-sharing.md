@@ -5,11 +5,13 @@ summary: A 5-minute ride is a 3.7 GB file. Here is the setup that turns it into 
 tags: [self-hosting, ffmpeg, NVENC, Jellyfin, rclone]
 ---
 
-I film most rides with a helmet GoPro. A five-minute clip in 4K is about 3.7 GB, and a weekend is a few hundred of them. They lived on my cloud drive, which meant that watching one, or sending one to the person riding behind me, started with a two-minute download.
+> [!tldr] Every GoPro clip is stored twice: the 4K original in a cloud archive, and a small 1440p copy on my server that plays instantly. One command imports an SD card, another turns any clip or day into a private link that expires on its own.
+
+I film most rides with a helmet GoPro. A five-minute clip in 4K is about **3.7 GB**, and a weekend is a few hundred of them. They lived on my cloud drive, which meant that watching one, or sending one to the person riding behind me, started with a **two-minute download**.
 
 > [!note] The slowness was never where the files lived. It was the delivery: download the whole thing first, at a raw bitrate nobody needs on a phone. Fix that and the storage can stay where it is.
 
-So every clip now exists twice. The untouched 4K original goes to the archive, and a small, seek-friendly copy goes to my server, where it plays straight away.
+So **every clip now exists twice**. The untouched 4K original goes to the archive, and a small, seek-friendly copy goes to my server, where it plays straight away.
 
 ```stats
 9×   | smaller stream copy
@@ -34,7 +36,7 @@ flowchart TD
   arc -. 4K on request .-> share
 ```
 
-The transcode runs on the desktop's RTX 3060: hardware decode, scale, `h264_nvenc`, and `+faststart` so the index sits at the front of the file and playback can start before the rest has arrived. The server never transcodes anything. Jellyfin direct-plays the copy, which is why it feels instant.
+The transcode runs on the desktop's RTX 3060: hardware decode, scale, `h264_nvenc` ([NVENC](https://en.wikipedia.org/wiki/Nvidia_NVENC) is the GPU's built-in video encoder), and `+faststart` so the index sits at the front of the file and playback can start before the rest has arrived. **The server never transcodes anything.** [Jellyfin](https://en.wikipedia.org/wiki/Jellyfin) direct-plays the copy, which is why it feels instant.
 
 ```bars title="One 5-minute clip"
 4K original     | HEVC, ~108 Mbps   | 3700 | 3.7 GB
@@ -52,9 +54,9 @@ $ gopro share 2026-07-25 --all --days 3 --title "Sunday"
 # one link for the whole day, gone after three days
 ```
 
-The link opens a small page with a poster and a player for every clip, and a download picker per clip: the 1440p copy for someone who just wants it on their phone, the 4K original for someone who wants to edit it. No account, no app. After 14 days by default the whole folder deletes itself.
+The link opens a small page with a poster and a player for every clip, and a download picker per clip: the 1440p copy for someone who just wants it on their phone, the 4K original for someone who wants to edit it. **No account, no app.** After 14 days by default the whole folder deletes itself.
 
-Stream copies are hard-linked into the share folder, so a share costs no disk. Originals are real copies, pulled from the archive by the server itself. Pulling them one by one was slow, so a share now fetches all of its originals in a single batched `rclone` run, which lets the transfers run in parallel:
+Stream copies are [hard-linked](https://en.wikipedia.org/wiki/Hard_link) into the share folder, so **a share costs no disk**. Originals are real copies, pulled from the archive by the server itself. Pulling them one by one was slow, so a share now fetches all of its originals in a single batched [`rclone`](https://en.wikipedia.org/wiki/Rclone) run, which lets the transfers run in parallel:
 
 ```bars title="Pulling originals from the archive" ratio
 one call per clip   | sequential       | 20 | 20 MB/s
@@ -63,13 +65,13 @@ one batched run     | parallel files   | 80 | 80 MB/s | *
 
 ## Never encoding the same clip twice
 
-The question I kept asking was "if I change the quality, do I redo everything?". The answer is now built into the files. Every stream copy carries the settings it was made with in its mp4 comment tag:
+The question I kept asking was "if I change the quality, do I redo everything?". The answer is now built into the files. Every stream copy **carries the settings it was made with** in its mp4 comment tag:
 
 ```txt title="mp4 comment tag"
 gopro-enc:v2:1440p:h264:cq22
 ```
 
-`gopro backfill` compares that stamp with the current config. Clips already at the current profile are skipped, stale ones are re-encoded, missing ones are made. Change the resolution or the quality in the config and exactly the outdated copies get redone, in batches, resumable, safe to run twice.
+`gopro backfill` compares that stamp with the current config. Clips already at the current profile are skipped, stale ones are re-encoded, missing ones are made. Change the resolution or the quality in the config and **exactly the outdated copies** get redone, in batches, resumable, safe to run twice.
 
 ```term
 $ gopro backfill --dry-run
