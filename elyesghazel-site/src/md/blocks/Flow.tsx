@@ -20,8 +20,10 @@ export default function Flow({ source, caption }: { source: string; caption?: st
         startOnLoad: false,
         securityLevel: "strict",
         theme: "base",
+        // plain SVG text: HTML labels in foreignObject get measured wrong in some browsers
+        htmlLabels: false,
         fontFamily: v("--font-mono"),
-        flowchart: { curve: "basis", padding: 14, nodeSpacing: 36, rankSpacing: 44, htmlLabels: true },
+        flowchart: { curve: "basis", padding: 14, nodeSpacing: 36, rankSpacing: 44, htmlLabels: false },
         themeVariables: {
           darkMode: v("--ink") === "#ffffff",
           fontFamily: v("--font-mono"),
