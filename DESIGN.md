@@ -107,7 +107,9 @@ stays two characters.
 4 px base: `--sp-1` 4, `-2` 8, `-3` 12, `-4` 16, `-5` 20, `-6` 24, `-8` 32,
 `-10` 40, `-12` 48, `-16` 64, `-20` 80, `-24` 96.
 
-- **Site:** one centered column, `--measure` 42 rem, 24 px side padding.
+- **Site:** one centered column, 24 px side padding. The portfolio overrides
+  `--measure` to 68 rem and uses 17 px body text on desktop (16 px on phones);
+  running paragraphs stay within 75 characters. The shared default remains 42 rem.
   Sections 80-112 px apart. Nothing breaks out of the column.
 - **Tools:** `--measure-wide` 72 rem, `.grid-main` puts a 20 rem side column
   next to the main one from 960 px up. Sections 48 px apart.

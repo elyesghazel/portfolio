@@ -66,7 +66,7 @@ function Home() {
         <Hero />
 
         <Section id="about" label="about">
-          <div className="space-y-5">
+          <div className="max-w-[75ch] space-y-5">
             {about.map((paragraph, i) => (
               <p
                 key={paragraph.slice(0, 24)}
@@ -152,7 +152,7 @@ function Hero() {
         {site.role} · {site.location}
       </p>
 
-      <p className="mt-8 max-w-[34rem] text-[length:var(--fs-md)] leading-relaxed text-body">
+      <p className="mt-8 max-w-[44rem] text-[length:var(--fs-md)] leading-relaxed text-body">
         {hero.line}
       </p>
 

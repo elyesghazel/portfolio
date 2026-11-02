@@ -32,7 +32,7 @@ export default function ProjectView({ project }: { project: ProjectPage }) {
             {project.title}
           </h1>
 
-          <p className="mt-6 max-w-[34rem] text-[length:var(--fs-md)] leading-relaxed">
+          <p className="mt-6 max-w-[44rem] text-[length:var(--fs-md)] leading-relaxed">
             {project.summary}
           </p>
 

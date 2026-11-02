@@ -27,6 +27,9 @@
 }
 
 :root {
+  --measure: 68rem;
+  --fs-base: 16px;
+  --fs-md: 18px;
   --key: #7fd39b;
   --hw: #d8b46a;
 }
@@ -38,6 +41,13 @@
   :root:not([data-theme]) {
     --key: #1e7a44;
     --hw: #8f5f00;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fs-base: 17px;
+    --fs-md: 19px;
   }
 }
 
@@ -396,6 +406,9 @@
 /* Posts and project write-ups. Blocks get vertical rhythm from .md > * + *. */
 .md > * + * {
   margin-top: var(--sp-5);
+}
+.md-flow > :is(p, ul, ol, blockquote) {
+  max-width: 75ch;
 }
 .md-flow > * + * {
   margin-top: var(--sp-5);

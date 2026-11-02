@@ -44,7 +44,7 @@ export default function PostView({ post }: { post: Post }) {
             {post.title}
           </h1>
 
-          <p className="mt-5 max-w-[34rem] text-[length:var(--fs-md)] leading-relaxed">
+          <p className="mt-5 max-w-[44rem] text-[length:var(--fs-md)] leading-relaxed">
             {post.summary}
           </p>
 
