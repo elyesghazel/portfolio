@@ -73,8 +73,8 @@ export default function Header({ variant }: { variant: "home" | "project" }) {
           <span className="text-faint transition-colors group-hover:text-accent">{tld}</span>
         </Link>
 
-        <div className="flex items-center gap-1 sm:gap-5">
-          <nav aria-label="Sections" className="hidden items-center gap-5 text-dim sm:flex">
+        <div className="flex items-center gap-1 lg:gap-5">
+          <nav aria-label="Sections" className="hidden items-center gap-5 text-dim lg:flex">
             {nav.map((item) => (
               <Link
                 key={item.id}
@@ -97,7 +97,7 @@ export default function Header({ variant }: { variant: "home" | "project" }) {
 
           <button
             type="button"
-            className="flex h-9 items-center px-2 text-dim transition-colors hover:text-ink sm:hidden"
+            className="flex h-9 items-center px-2 text-dim transition-colors hover:text-ink lg:hidden"
             aria-expanded={open}
             aria-controls="menu"
             onClick={() => setOpen((v) => !v)}
@@ -113,7 +113,7 @@ export default function Header({ variant }: { variant: "home" | "project" }) {
         <nav
           id="menu"
           aria-label="Sections"
-          className="border-t border-rule bg-paper sm:hidden"
+          className="border-t border-rule bg-paper lg:hidden"
         >
           <ul className="mx-auto max-w-[var(--measure)] px-6 py-2">
             {nav.map((item) => (
