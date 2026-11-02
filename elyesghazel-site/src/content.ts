@@ -77,7 +77,7 @@ export const work: WorkItem[] = [
     role: "founder",
     description:
       "3D-printed foldable licence plate holders for supermoto and enduro bikes. Product design, production, storefront, and the tooling that tells me whether any of it makes money.",
-    tags: ["Fusion 360", "ASA+", "Shopify", "Next.js", "Prisma"],
+    tags: ["ASA+", "Shopify", "Next.js", "Prisma"],
     slug: "slideplate",
   },
   {
