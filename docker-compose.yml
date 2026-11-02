@@ -1,6 +1,8 @@
 services:
   main-site:
     build: .
+    security_opt:
+      - no-new-privileges:true
     container_name: web-main-site
     restart: always
     networks:
