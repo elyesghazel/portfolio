@@ -7,9 +7,20 @@ export default function Footer() {
         © {new Date().getFullYear()} {site.name}
       </span>
       <span className="hidden sm:inline">served from a server I run myself</span>
-      <a href="#top" className="transition-colors hover:text-ink">
-        top <span aria-hidden className="arr arr-u">&uarr;</span>
-      </a>
+      <span className="flex items-center gap-x-6">
+        <a
+          href={site.kofi}
+          target="_blank"
+          rel="noreferrer noopener"
+          title="support me on ko-fi"
+          className="transition-colors hover:text-ink"
+        >
+          ko-fi <span aria-hidden className="arr arr-ne">&#8599;</span>
+        </a>
+        <a href="#top" className="transition-colors hover:text-ink">
+          top <span aria-hidden className="arr arr-u">&uarr;</span>
+        </a>
+      </span>
     </footer>
   );
 }

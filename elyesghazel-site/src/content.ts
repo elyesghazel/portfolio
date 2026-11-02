@@ -12,6 +12,7 @@ export const site = {
   role: "software engineer",
   location: "Zürich, CH",
   email: "elyes@elyesghazel.ch",
+  kofi: "https://ko-fi.com/elyesghazel",
 };
 
 export const hero = {
@@ -217,6 +218,7 @@ export const links = [
     value: "linkedin.com/in/elyes-ghazel",
     href: "https://linkedin.com/in/elyes-ghazel",
   },
+  { label: "support", value: "ko-fi.com/elyesghazel", href: site.kofi },
 ];
 
 export const contactNote =
