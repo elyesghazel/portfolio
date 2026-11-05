@@ -40,15 +40,15 @@ All values live in `tokens.css`. Use the variables, never the hex.
 | token | dark | light | use |
 |---|---|---|---|
 | `--bg` | `#000000` | `#fafafa` | page |
-| `--bg-raised` | `#0b0b0b` | `#ffffff` | cards, header, toasts, tables |
+| `--bg-raised` | `#0f0f0f` | `#ffffff` | cards, header, toasts, tables |
 | `--bg-sunken` | `#050505` | `#f2f2f2` | inputs, inline code |
-| `--bg-hover` | `#141414` | `#f0f0f0` | row and button hover |
+| `--bg-hover` | `#1a1a1a` | `#ebebeb` | row and button hover |
 | `--ink` | `#ffffff` | `#0a0a0a` | headings, values, primary button, active nav |
 | `--body` | `#dcdcdc` | `#2b2b2b` | running text |
 | `--dim` | `#a6a6a6` | `#555555` | secondary text, nav, row labels |
 | `--faint` | `#8a8a8a` | `#707070` | captions, meta, the `//` (still AA on `--bg`) |
-| `--rule` | `#232323` | `#e3e3e3` | hairlines, card borders |
-| `--rule-strong` | `#3a3a3a` | `#c4c4c4` | input and button borders, hovered cards |
+| `--rule` | `#333333` | `#d4d4d4` | hairlines, card borders (visible, not loud) |
+| `--rule-strong` | `#666666` | `#888888` | input and button borders, hovered cards (min 3:1 on every bg) |
 | `--accent` | `#c47070` | `#a94848` | the one colour |
 
 **The accent** is a muted brick red. It marks *one* thing at a time: a link

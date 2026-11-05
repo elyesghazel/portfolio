@@ -112,8 +112,8 @@
   --dur-2: 200ms; /* underline draw, arrow nudge */
   --dur-3: 500ms; /* reveal, image zoom */
 
-  --focus-ring: 1px solid var(--ink);
-  --focus-offset: 3px;
+  --focus-ring: 2px solid var(--ink);
+  --focus-offset: 2px;
 }
 
 /* ------------------------------------------------------------- dark */
@@ -123,16 +123,16 @@
   color-scheme: dark;
 
   --bg: #000000;         /* page */
-  --bg-raised: #0b0b0b;  /* cards, header, menus, toasts */
+  --bg-raised: #0f0f0f;  /* cards, header, menus, toasts */
   --bg-sunken: #050505;  /* inputs, code */
-  --bg-hover: #141414;   /* row hover in lists and tables */
+  --bg-hover: #1a1a1a;   /* row hover in lists and tables */
 
   --ink: #ffffff;        /* headings, values, active nav, primary button */
   --body: #dcdcdc;       /* running text */
   --dim: #a6a6a6;        /* secondary text, nav, labels in rows */
   --faint: #8a8a8a;      /* captions, meta, the // in labels (AA on --bg) */
-  --rule: #232323;       /* hairlines */
-  --rule-strong: #3a3a3a;/* hovered borders, input borders */
+  --rule: #333333;       /* hairlines, card borders */
+  --rule-strong: #666666;/* input/button borders, hovered cards (3:1+) */
 
   --accent: #c47070;     /* the one colour. Links in prose, "now", the current thing */
   --accent-hover: #d98d8d;
@@ -164,13 +164,13 @@
     --bg: #fafafa;
     --bg-raised: #ffffff;
     --bg-sunken: #f2f2f2;
-    --bg-hover: #f0f0f0;
+    --bg-hover: #ebebeb;
     --ink: #0a0a0a;
     --body: #2b2b2b;
     --dim: #555555;
     --faint: #707070;
-    --rule: #e3e3e3;
-    --rule-strong: #c4c4c4;
+    --rule: #d4d4d4;
+    --rule-strong: #888888;
     --accent: #a94848;
     --accent-hover: #8c3535;
     --accent-soft: rgba(169, 72, 72, 0.09);
@@ -195,13 +195,13 @@
   --bg: #fafafa;
   --bg-raised: #ffffff;
   --bg-sunken: #f2f2f2;
-  --bg-hover: #f0f0f0;
+  --bg-hover: #ebebeb;
   --ink: #0a0a0a;
   --body: #2b2b2b;
   --dim: #555555;
   --faint: #707070;
-  --rule: #e3e3e3;
-  --rule-strong: #c4c4c4;
+  --rule: #d4d4d4;
+  --rule-strong: #888888;
   --accent: #a94848;
   --accent-hover: #8c3535;
   --accent-soft: rgba(169, 72, 72, 0.09);
