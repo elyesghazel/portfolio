@@ -52,7 +52,7 @@ function Home() {
     <div id="top" className="min-h-screen">
       <Header variant="home" />
 
-      <main className="mx-auto max-w-[var(--measure)] px-6 pb-4">
+      <main className="mx-auto max-w-[var(--measure)] px-4 sm:px-6 pb-4">
         <Hero />
 
         <Section id="work" label="work" aside={`${work.length} selected · ${alsoBuilt.length} more`}>
@@ -230,7 +230,7 @@ function NotFound() {
   return (
     <div id="top" className="min-h-screen">
       <Header variant="project" />
-      <main className="mx-auto max-w-[var(--measure)] px-6 pt-24">
+      <main className="mx-auto max-w-[var(--measure)] px-4 sm:px-6 pt-24">
         <p className="text-faint">404</p>
         <h1 className="mt-4 text-2xl text-ink">Nothing here.</h1>
         <p className="mt-6">

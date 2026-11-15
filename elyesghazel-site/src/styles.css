@@ -28,8 +28,14 @@
 
 :root {
   --measure: 68rem;
-  --fs-base: 16px;
-  --fs-md: 18px;
+  /* Phone sizes; the 768px query below steps them back up. */
+  --fs-base: 14.5px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 36px;
+  --lh-body: 1.65;
   --key: #7fd39b;
   --hw: #d8b46a;
 }
@@ -44,6 +50,17 @@
   }
 }
 
+@media (min-width: 640px) {
+  :root {
+    --fs-base: 16px;
+    --fs-md: 18px;
+    --fs-lg: 20px;
+    --fs-xl: 26px;
+    --fs-2xl: 34px;
+    --fs-3xl: 44px;
+    --lh-body: 1.72;
+  }
+}
 @media (min-width: 768px) {
   :root {
     --fs-base: 17px;
@@ -960,4 +977,28 @@
 }
 .post-body .md-flow > :is(p, ul, ol, blockquote) {
   max-width: 68ch;
+}
+
+/* Galleries inside articles: pictures side by side, captions as wide as their picture. */
+.post-body .md-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--sp-6);
+  margin-top: var(--sp-5);
+}
+.post-body .md-gallery > * {
+  margin-top: 0 !important;
+}
+.post-body .md-gallery > figure {
+  display: table;
+  max-width: 100%;
+}
+.post-body .md-gallery figcaption {
+  display: table-caption;
+  caption-side: bottom;
+}
+.post-body .md > :first-child.md-gallery,
+.post-body .md > .md-gallery:first-child {
+  margin-top: 0;
 }
