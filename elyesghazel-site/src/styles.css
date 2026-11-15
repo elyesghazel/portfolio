@@ -876,3 +876,88 @@
     min-width: 480px;
   }
 }
+
+/* ------------------------------------------------------------ post page */
+
+/* Thin reading bar under the header. */
+.read-bar {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: 49;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.toc-item {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  gap: 0.25rem;
+  padding: 5px 8px 5px 10px;
+  margin-left: -11px;
+  border-left: 1px solid var(--rule);
+  color: var(--dim);
+  line-height: 1.4;
+  transition:
+    color var(--dur-1) ease,
+    border-color var(--dur-1) ease;
+}
+.toc-item:hover {
+  color: var(--ink);
+}
+.toc-item.is-active {
+  border-left-color: var(--accent);
+  color: var(--ink);
+}
+
+/* Headings in a post: numbered, readable, easy to skim for. */
+.post-body {
+  counter-reset: h2;
+}
+.post-body .md .md-h2 {
+  display: block;
+  padding-top: var(--sp-12);
+  color: var(--ink);
+  font-size: var(--fs-lg);
+  letter-spacing: -0.01em;
+  text-transform: none;
+  line-height: var(--lh-snug);
+  counter-increment: h2;
+}
+.post-body .md-h2::after,
+.post-body .md-h2 .slashes {
+  display: none;
+}
+.post-body .md-h2::before {
+  content: counter(h2, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--sp-2);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--rule);
+  color: var(--faint);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+}
+
+/* Pictures stay modest in the text; click for full size. */
+.post-body .md-img img,
+.post-body figure > button img {
+  width: auto;
+  max-width: 100%;
+  max-height: min(22rem, 55vh);
+  object-fit: contain;
+  background: var(--bg-sunken);
+}
+.post-body .md-img img {
+  cursor: zoom-in;
+}
+.post-body figure > button {
+  width: auto;
+  max-width: 100%;
+}
+.post-body .md-flow > :is(p, ul, ol, blockquote) {
+  max-width: 68ch;
+}
