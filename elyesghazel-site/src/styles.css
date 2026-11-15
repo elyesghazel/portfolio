@@ -410,13 +410,15 @@
 .log {
   position: relative;
   --year-w: 4.5rem;
-  --rail-x: calc(var(--year-w) + 12px);
+  --node-gap: 22px; /* rail to content */
+  --col-gap: 46px;
+  --rail-x: calc(var(--year-w) + var(--col-gap) - var(--node-gap));
 }
 .log-rail,
 .log-fill {
   position: absolute;
-  left: var(--rail-x);
-  top: 10px;
+  left: calc(var(--rail-x) - 0.5px);
+  top: 11px;
   width: 1px;
 }
 .log-rail {
@@ -431,7 +433,7 @@
 .log-year {
   display: grid;
   grid-template-columns: var(--year-w) 1fr;
-  gap: 0 25px;
+  gap: 0 var(--col-gap);
 }
 .log-year + .log-year {
   margin-top: var(--sp-8);
@@ -459,25 +461,32 @@
 }
 .log-node {
   position: absolute;
-  top: 7px;
-  left: -17px;
-  width: 9px;
-  height: 9px;
+  top: 2px;
+  left: calc(-1 * var(--node-gap) - 11px);
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
   border: 1px solid var(--rule-strong);
   border-radius: 50%;
   background: var(--bg);
+  color: var(--faint);
   transition:
-    background-color var(--dur-2) ease,
+    color var(--dur-2) ease,
     border-color var(--dur-2) ease,
     box-shadow var(--dur-2) ease;
 }
+.log-node svg {
+  width: 12px;
+  height: 12px;
+}
 .log-entry.on .log-node {
   border-color: var(--ink);
-  background: var(--ink);
+  color: var(--ink);
 }
 .log-entry.now .log-node {
   border-color: var(--accent);
-  background: var(--accent);
+  color: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
 .log-month {
@@ -487,13 +496,7 @@
 @media (max-width: 639px) {
   .log {
     --year-w: 2.75rem;
-    --rail-x: calc(var(--year-w) + 10px);
-  }
-  .log-year {
-    column-gap: 21px;
-  }
-  .log-node {
-    left: -15px;
+    --col-gap: 42px;
   }
 }
 
