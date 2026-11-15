@@ -25,6 +25,8 @@ export type Post = {
   summary: string;
   tags: string[];
   minutes: number;
+  /** Optional image for the post card, a file in public/. */
+  cover?: string;
   body: string;
 };
 
@@ -61,6 +63,7 @@ export const posts: Post[] = Object.entries(postFiles)
         summary: str(data.summary),
         tags: list(data.tags),
         minutes: readingTime(body),
+        cover: str(data.cover) || undefined,
         body,
       },
     };

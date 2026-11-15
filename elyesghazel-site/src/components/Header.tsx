@@ -4,10 +4,9 @@ import { site } from "../content";
 import ThemeToggle from "./ThemeToggle";
 
 const nav = [
-  { label: "about", id: "about" },
-  { label: "stack", id: "stack" },
   { label: "work", id: "work" },
   { label: "blog", id: "blog" },
+  { label: "about", id: "about" },
   { label: "log", id: "log" },
   { label: "contact", id: "contact" },
 ];

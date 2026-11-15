@@ -3,6 +3,7 @@ title: A port timing calculator for my DT125
 date: 2026-11-15
 summary: I am porting a two-stroke cylinder for the first time, so I had agents build a calculator that turns port heights into degrees and shows what a base plate does before I cut anything.
 tags: [two-stroke, TypeScript, AI agents, tools]
+cover: /work/porttiming-site.webp
 ---
 
 > [!tldr] I want more top end from the Athena 170 kit on my Yamaha DT125, and the first step is a base plate. To see what that does to the port timing before I touch the cylinder, I had agents build **porttiming.elyesghazel.ch**: a calculator that turns port heights into degrees, compares before and after, and checks the result against Blair's time-area targets.

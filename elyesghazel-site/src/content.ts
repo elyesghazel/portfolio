@@ -57,56 +57,169 @@ export const stack: { group: string; items: string[] }[] = [
   },
 ];
 
+/**
+ * Selected work on the home page. Every entry gets its own row with a big
+ * picture next to it, alternating sides, so no two look the same.
+ */
+export type Media =
+  | { kind: "image"; src: string; alt: string }
+  /** A looping muted clip; `poster` is shown first and under reduced motion. */
+  | { kind: "video"; src: string; poster: string; alt: string }
+  /** A small terminal drawn in CSS, for things that have no picture. */
+  | { kind: "terminal"; title: string; lines: { cmd?: string; out?: [string, string] }[] };
+
 export type WorkItem = {
   title: string;
+  /** Small line above the title, e.g. "hardware · solo". */
+  kicker: string;
   period: string;
-  role: string;
+  /** One sentence, the pitch. */
+  line: string;
   description: string;
-  tags: string[];
-  /** Links to /projects/<slug> if a page exists in `projects` below. */
-  slug?: string;
-  href?: string;
-  /** Optional thumbnail, a file in public/. */
-  image?: { src: string; alt: string };
+  /** Short label/value pairs under the text. */
+  specs: { label: string; value: string }[];
+  media: Media;
+  /** Caption under the picture, after "fig. 0n". */
+  caption: string;
+  /** Optional badge next to the kicker, e.g. "live" or "8 stars". */
+  badge?: string;
+  /** First one is the primary button. Hrefs starting with "/" stay on site. */
+  links: { label: string; href: string }[];
 };
 
 export const work: WorkItem[] = [
   {
-    title: "SlidePlate",
-    period: "2025.12 - now",
-    role: "founder",
+    title: "Stealthy",
+    kicker: "hardware · solo",
+    period: "2026.02 - 2026.03",
+    line: "A pocket security-research badge, from an empty repo to a thing I can hold.",
     description:
-      "3D-printed foldable licence plate holders for supermoto and enduro bikes. Product design, production, storefront, and the tooling that tells me whether any of it makes money.",
-    tags: ["ASA+", "Shopify", "Next.js", "Prisma"],
-    slug: "slideplate",
+      "Custom circuit board on the ESP32-S3, a 2.13\" e-ink screen, WiFi and infrared tooling. I designed the board in KiCad and wrote the firmware in C++ from scratch, in about a month.",
+    specs: [
+      { label: "silicon", value: "ESP32-S3" },
+      { label: "board", value: "custom, KiCad" },
+      { label: "firmware", value: "C++, PlatformIO" },
+    ],
+    media: { kind: "image", src: "/stealthy-hand.jpg", alt: "The finished Stealthy badge, held in one hand" },
+    caption: "the finished badge, running its own firmware",
+    links: [
+      { label: "read the story", href: "/projects/stealthy" },
+      { label: "source", href: "https://github.com/elyesghazel/stealthy-firmware" },
+    ],
+  },
+  {
+    title: "SlidePlate",
+    kicker: "business · founder",
+    period: "2025.12 - now",
+    badge: "selling",
+    line: "Foldable licence plate holders for supermoto and enduro bikes.",
+    description:
+      "Short, light, and they bolt straight onto the bike. I do the product design, the printing, the storefront, and the tooling that tells me whether any of it makes money.",
+    specs: [
+      { label: "versions", value: "BASE + FLEX" },
+      { label: "fits", value: "Yamaha, KTM, TM, Beta + universal" },
+      { label: "shop", value: "Shopify" },
+    ],
+    media: { kind: "image", src: "/work/slideplate-site.webp", alt: "The slideplate.ch storefront" },
+    caption: "the live shop: slideplate.ch",
+    links: [
+      { label: "read more", href: "/projects/slideplate" },
+      { label: "slideplate.ch", href: "https://slideplate.ch" },
+    ],
+  },
+  {
+    title: "zunder",
+    kicker: "linux · open source",
+    period: "2026.10 - now",
+    badge: "8 stars",
+    line: "One prompt for your apps and your windows.",
+    description:
+      "A launcher and ALT+TAB switcher that looks like a terminal: apps, windows, files, math, currencies, time zones and clipboard history in one prompt, and live thumbnails of every window. One small Rust daemon, plugins are a script in a folder.",
+    specs: [
+      { label: "written in", value: "Rust" },
+      { label: "runs on", value: "Hyprland, Windows, macOS" },
+      { label: "install", value: "one line" },
+    ],
+    media: { kind: "video", src: "/work/zunder.mp4", poster: "/work/zunder.webp", alt: "zunder converting a time zone on a Hyprland desktop" },
+    caption: "\"3pm ny\", answered without leaving the keyboard",
+    links: [
+      { label: "source", href: "https://github.com/elyesghazel/zunder" },
+    ],
+  },
+  {
+    title: "Zweitakt",
+    kicker: "game · built with agents",
+    period: "2026.11",
+    badge: "playable",
+    line: "Run a two-stroke garage in a Swiss village, in the browser.",
+    description:
+      "A low-poly workshop game where you fix bikes by hand. I wrote the roadmap and played every build, AI agents wrote the code, mostly overnight. Empty folder on Saturday, public with multiplayer on Sunday.",
+    specs: [
+      { label: "engine", value: "Three.js" },
+      { label: "built in", value: "one weekend" },
+      { label: "plays on", value: "phone + desktop" },
+    ],
+    media: { kind: "image", src: "/zweitakt-shop.jpg", alt: "The Zweitakt garage with a bike on the lift" },
+    caption: "the garage, one bike on the lift",
+    links: [
+      { label: "play it", href: "https://zweitakt.elyesghazel.ch" },
+      { label: "how it was built", href: "/blog/zweitakt-overnight" },
+    ],
   },
   {
     title: "TSW25 Fahrstand",
+    kicker: "hardware · commission",
     period: "2025.03 - 2025.10",
-    role: "hardware & firmware",
+    badge: "sold",
+    line: "A real train driver's desk for Train Sim World 25.",
     description:
-      "A physical train driver's desk for Train Sim World 25. Custom PCB, hand-soldered, 3D-printed housing, self-designed levers on potentiometers.",
-    tags: ["C++", "Arduino", "PCB", "CAD", "3D printing"],
-    slug: "tsw25-fahrstand",
-    image: { src: "/log/tsw25.webp", alt: "The TSW25 Fahrstand, a custom train driver's desk" },
+      "A friend was done driving trains with a keyboard. Custom PCB, hand-soldered, a 3D-printed housing and levers I designed on potentiometers. Seven months, then it sold.",
+    specs: [
+      { label: "controller", value: "Arduino, USB-HID" },
+      { label: "board", value: "custom PCB" },
+      { label: "housing", value: "Fusion 360, printed" },
+    ],
+    media: { kind: "image", src: "/log/tsw25.webp", alt: "The TSW25 Fahrstand, a custom train driver's desk" },
+    caption: "door buttons, PZB toggles and printed levers",
+    links: [{ label: "read the story", href: "/projects/tsw25-fahrstand" }],
   },
   {
-    title: "self-hosted infrastructure",
+    title: "my own server",
+    kicker: "infrastructure · everything",
     period: "2023 - now",
-    role: "everything",
+    line: "Every elyesghazel.ch subdomain runs on one machine I maintain myself.",
     description:
-      "One server, ~30 containers behind Traefik: mail, Git and CI, dashboards, monitoring, encrypted offsite backups. Every elyesghazel.ch subdomain runs here, including this page.",
-    tags: ["Linux", "Docker", "Traefik", "Forgejo", "restic"],
+      "About 30 containers behind Traefik: mail, Git and CI, dashboards, monitoring, encrypted offsite backups. When it goes down at 2am it is nobody's problem but mine.",
+    specs: [
+      { label: "base", value: "Linux, Docker" },
+      { label: "edge", value: "Traefik" },
+      { label: "backups", value: "restic, offsite" },
+    ],
+    media: {
+      kind: "terminal",
+      title: "elyesghazel.ch",
+      lines: [
+        { cmd: "status" },
+        { out: ["mail", "up"] },
+        { out: ["git + ci", "up"] },
+        { out: ["monitoring", "up"] },
+        { out: ["backups", "nightly, encrypted"] },
+        { out: ["this page", "up"] },
+      ],
+    },
+    caption: "the short version of a long list",
+    links: [{ label: "how my agents run it", href: "/blog/ai-memory-recall" }],
   },
-  {
-    title: "3D printing shop",
-    period: "2024 - now",
-    role: "design & production",
-    description:
-      "Made-to-order printed parts and small objects, designed and printed here rather than resold.",
-    tags: ["CAD", "3D printing", "Shopify"],
-    href: "https://shop.elyesghazel.ch",
-  },
+];
+
+/** Smaller things, one row each. All public. */
+export const alsoBuilt: { title: string; line: string; year: string; href: string; lang: string }[] = [
+  { title: "brief", line: "keyboard-first mail client for Hyprland, multi-account IMAP", year: "2026", lang: "Rust", href: "https://github.com/elyesghazel/brief" },
+  { title: "kerf", line: "video editor with a timeline AI agents can cut, remote render over ssh", year: "2026", lang: "Rust", href: "https://github.com/elyesghazel/kerf" },
+  { title: "halo", line: "RGB lighting and fans for the whole PC on Linux, in one window", year: "2026", lang: "Rust", href: "https://github.com/elyesghazel/halo" },
+  { title: "hyprwidgets", line: "desktop widgets on empty workspaces: weather, calendar, media", year: "2026", lang: "Rust", href: "https://github.com/elyesghazel/hyprwidgets" },
+  { title: "porttiming", line: "two-stroke port timing calculator, before and after a base plate", year: "2026", lang: "TypeScript", href: "https://porttiming.elyesghazel.ch" },
+  { title: "sessionrecall", line: "semantic search over past Claude Code, Codex and OpenCode sessions", year: "2026", lang: "Python", href: "https://github.com/elyesghazel/sessionrecall" },
 ];
 
 export type ProjectImage = { src: string; alt: string; caption?: string };
@@ -114,28 +227,6 @@ export type ProjectImage = { src: string; alt: string; caption?: string };
 /*
  * Project write-ups and blog posts are markdown files in src/markdown/.
  */
-
-/**
- * One project gets a framed, image-led card at the top of the work section.
- * `slug` must match an entry in `projects` below.
- */
-export const featured = {
-  slug: "stealthy",
-  label: "featured build",
-  title: "Stealthy",
-  role: "hardware & firmware, solo",
-  tagline:
-    "A pocket-sized security-research badge on the ESP32-S3. Custom circuit board, e-ink UI, WiFi and infrared tooling - board and firmware designed and written from an empty repo in about a month.",
-  image: { src: "/stealthy-hand.jpg", alt: "The finished Stealthy badge, held in one hand" },
-  specs: [
-    { label: "silicon", value: "ESP32-S3" },
-    { label: "firmware", value: "C++, from scratch" },
-    { label: "board", value: "custom, KiCad" },
-    { label: "built in", value: "~1 month" },
-  ],
-  tags: ["ESP32-S3", "C++", "PlatformIO", "KiCad", "PCB design", "e-ink", "802.11", "IR"],
-  repo: { label: "view code", url: "https://github.com/elyesghazel/stealthy-firmware" },
-};
 
 /**
  * The log: what happened when, newest first. Short lines, past tense.

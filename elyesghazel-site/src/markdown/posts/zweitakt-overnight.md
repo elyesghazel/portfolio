@@ -3,6 +3,7 @@ title: I went to bed with a roadmap and woke up to a game
 date: 2026-11-12
 summary: Zweitakt is a browser game about running a two-stroke garage in a Swiss village. AI agents built it from my roadmap in one weekend, milestone by milestone, while I played each build and said what felt wrong.
 tags: [game dev, AI agents, Three.js, TypeScript]
+cover: /zweitakt-shop.jpg
 ---
 
 > [!tldr] Zweitakt is a low-poly workshop game where you fix two-stroke bikes by hand, in the browser and on a phone. I wrote the roadmap and played every build, and **AI agents wrote the code**, one milestone at a time, mostly overnight. It went from an empty folder on Saturday evening to a public game with multiplayer on Sunday night.

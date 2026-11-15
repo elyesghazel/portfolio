@@ -3,6 +3,7 @@ title: I built a session search for my agents, then found two projects that alre
 date: 2026-11-15
 summary: sessionrecall searches past Claude Code, Codex and OpenCode sessions by meaning. I turned my server script into a package with agent workers and found recall-agents and session-recall just before the launch. The launch is off, the code stays up as a small project, and here is what I learned.
 tags: [AI agents, Claude Code, Codex, MCP, embeddings, prior art]
+cover: /sessionrecall-search.png
 ---
 
 > [!tldr] sessionrecall is the `recall` search from [my memory setup](/blog/ai-memory-recall), turned into a package: past Claude Code, Codex and OpenCode sessions, searched by meaning on the CPU, with an MCP server so the agent can search too. Just before releasing it I found [recall-agents](https://github.com/alirng/recall) and [session-recall](https://pypi.org/project/session-recall/), which are further along. I cancelled the launch. The code stays on GitHub as a portfolio project.

@@ -257,6 +257,102 @@
     text-align: center;
   }
 
+  /* The name: bigger than any title, still well inside the column. */
+  .hero-name {
+    font-size: clamp(var(--fs-3xl), 7.2vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-weight: var(--fw-medium);
+  }
+
+  /* Big faint project number in selected work. */
+  .exhibit-n {
+    color: var(--faint);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--dur-2) ease;
+  }
+  .exhibit:hover .exhibit-n {
+    color: var(--accent);
+  }
+
+  /* A picture in a window frame. */
+  .frame {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-2);
+    background: var(--bg-raised);
+    overflow: hidden;
+    transition: border-color var(--dur-1) ease;
+  }
+  .exhibit:hover .frame {
+    border-color: var(--rule-strong);
+  }
+  .frame-bar {
+    display: flex;
+    gap: 6px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .frame-bar span {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    border: 1px solid var(--rule-strong);
+  }
+  .frame-body {
+    background: var(--bg-sunken);
+  }
+  .frame-body img,
+  .frame-body video {
+    transition: transform 900ms var(--ease);
+  }
+  .exhibit:hover .frame-body img {
+    transform: scale(1.02);
+  }
+
+  .terminal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: clamp(20px, 5%, 48px);
+    font-size: var(--fs-sm);
+  }
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--ok);
+  }
+  .caret {
+    display: inline-block;
+    width: 0.6em;
+    height: 2px;
+    vertical-align: -2px;
+    background: var(--dim);
+  }
+
+  /* Post covers. Without an image, the first tag stands in, set large. */
+  .cover {
+    overflow: hidden;
+    background: var(--bg-sunken);
+  }
+  .cover-type {
+    display: flex;
+    height: 100%;
+    min-height: 8rem;
+    align-items: flex-end;
+    gap: 0.4em;
+    padding: var(--sp-5);
+    color: var(--dim);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 11px, color-mix(in srgb, var(--rule) 45%, transparent) 11px 12px),
+      var(--bg-sunken);
+  }
+
   /* Fade-up on first view. Only when JS is on, so no-JS still shows content. */
   .js .rv {
     opacity: 0;

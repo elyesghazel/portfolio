@@ -15,6 +15,7 @@ date: 2026-10-26               # posts only, YYYY-MM-DD
 summary: One or two sentences, shown in lists and under the title.
 tags: [self-hosting, ffmpeg]
 draft: true                    # optional, hides it from lists in production
+cover: /zweitakt-shop.jpg      # posts only, optional image for the home page card
 ---
 ```
 
