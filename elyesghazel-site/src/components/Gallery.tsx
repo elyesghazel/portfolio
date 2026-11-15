@@ -43,7 +43,7 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
 
   return (
     <>
-      <div className="mt-12 space-y-8">
+      <div className="md-gallery mt-12 space-y-8">
         {images.map((image, i) =>
           broken.has(i) ? null : (
             <figure key={image.src}>

@@ -66,7 +66,7 @@ export default function Header({ variant }: { variant: "home" | "project" }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-rule bg-paper/85 backdrop-blur-sm">
-      <div className="mx-auto flex h-[var(--header-h)] max-w-[var(--measure)] items-center justify-between gap-6 px-6">
+      <div className="mx-auto flex h-[var(--header-h)] max-w-[var(--measure)] items-center justify-between gap-6 px-4 sm:px-6">
         <Link to="/" className="group flex items-baseline text-ink" onClick={() => setOpen(false)}>
           <span>{name}</span>
           <span className="text-faint transition-colors group-hover:text-accent">{tld}</span>
@@ -114,7 +114,7 @@ export default function Header({ variant }: { variant: "home" | "project" }) {
           aria-label="Sections"
           className="border-t border-rule bg-paper lg:hidden"
         >
-          <ul className="mx-auto max-w-[var(--measure)] px-6 py-2">
+          <ul className="mx-auto max-w-[var(--measure)] px-4 sm:px-6 py-2">
             {nav.map((item) => (
               <li key={item.id} className="border-b border-rule last:border-0">
                 <Link

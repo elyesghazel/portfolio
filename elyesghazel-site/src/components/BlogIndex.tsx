@@ -8,7 +8,7 @@ export default function BlogIndex() {
   return (
     <div id="top" className="min-h-screen">
       <Header variant="project" />
-      <main className="mx-auto max-w-[var(--measure)] px-6 pb-4">
+      <main className="mx-auto max-w-[var(--measure)] px-4 sm:px-6 pb-4">
         <section className="pt-12 md:pt-20">
           <Link to="/" className="text-sm text-dim transition-colors hover:text-ink">
             <span aria-hidden>&larr;</span> home
