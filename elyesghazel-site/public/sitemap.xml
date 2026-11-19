@@ -41,6 +41,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://elyesghazel.ch/blog/sumry-open-source</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://elyesghazel.ch/blog/sessionrecall</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
